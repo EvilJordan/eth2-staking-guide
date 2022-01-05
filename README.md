@@ -66,7 +66,7 @@ PasswordAuthentication no
 PermitRootLogin prohibit-password
 PermitEmptyPasswords no
 ```
-
+Confirm `sshd`'s configuration is error-free:
 ```console
 sudo sshd -t
 ```
@@ -84,7 +84,7 @@ Add the following line to `fstab`:
 ```properties
 tmpfs	/run/shm	tmpfs	ro,noexec,nosuid	0	0
 ```
-
+Reboot the machine:
 ```console
 sudo reboot
 ```
@@ -175,6 +175,10 @@ UsePAM yes
 Add the following to the `sshd_config` file:
 ```properties
 AuthenticationMethods publickey,password publickey,keyboard-interactive
+```
+Confirm `sshd`'s configuration is error-free:
+```console
+sudo sshd -t
 ```
 Set up 2FA:
 ```console
