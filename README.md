@@ -9,7 +9,7 @@ This guide is built with a combination of information from:
 - https://launchpad.ethereum.org/en/
 
 ---
-This guide has references to Prater and is intended to work with the Testnet. Mainnet functionality is nearly identical with only a few configurations and parameters changed. Make sure any external interactions through Metamask, ETH2 Launchpad, beaconcha.in match your network expectations.
+This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nearly identical with only a few configurations and parameters changed. Make sure any external interactions through Metamask, Launchpad, beaconcha.in, etc. match your network expectations.
 
 ---
 
