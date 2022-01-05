@@ -109,26 +109,67 @@ sudo systemctl restart fail2ban
 ```
 
 ### Set up the Firewall
+By default, deny all incoming and outgoing traffic
 ```console
-# By default, deny all incoming and outgoing traffic
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
-# Allow ssh access
+```
+Allow ssh access
+```console
 sudo ufw allow ssh #22/tcp
-# Allow p2p ports
+```
+Allow p2p ports
+```console
 sudo ufw allow 9000/tcp comment p2p
 sudo ufw allow 9000/udp comment p2p
-# Allow eth1 port
+```
+Allow eth1 port
+```console
 sudo ufw allow 30303/tcp comment eth1
 sudo ufw allow 30303/udp comment eth1
-# Allow grafana web server port
+```
+Allow grafana web server port
+```console
 sudo ufw allow 3000/tcp comment grafana
-# Enable prometheus endpoint port
+```
+Enable prometheus endpoint port
+```console
 sudo ufw allow 9090/tcp comment prometheus
-# Enable teku api
+```
+Enable teku api
+```console
 sudo ufw allow 5051 comment teku-rest-api
-# Enable firewall
+```
+Enable firewall
+```console
 sudo ufw enable
+```
+Check firewall status:
+```console
+sudo ufw status numbered
+```
+Output should look like:
+```console
+Status: active
+
+     To                         Action      From
+     --                         ------      ----
+[ 1] 22/tcp                     ALLOW IN    Anywhere                  
+[ 2] 9000/tcp                   ALLOW IN    Anywhere                   # p2p
+[ 3] 9000/udp                   ALLOW IN    Anywhere                   # p2p
+[ 4] 30303/tcp                  ALLOW IN    Anywhere                   # eth1
+[ 5] 30303/udp                  ALLOW IN    Anywhere                   # eth1
+[ 6] 3000/tcp                   ALLOW IN    Anywhere                   # grafana
+[ 7] 9090/tcp                   ALLOW IN    Anywhere                   # prometheus
+[ 8] 5051                       ALLOW IN    Anywhere                   # teku-rest-api
+[ 9] 22/tcp (v6)                ALLOW IN    Anywhere (v6)             
+[10] 9000/tcp (v6)              ALLOW IN    Anywhere (v6)              # p2p
+[11] 9000/udp (v6)              ALLOW IN    Anywhere (v6)              # p2p
+[12] 30303/tcp (v6)             ALLOW IN    Anywhere (v6)              # eth1
+[13] 30303/udp (v6)             ALLOW IN    Anywhere (v6)              # eth1
+[14] 3000/tcp (v6)              ALLOW IN    Anywhere (v6)              # grafana
+[15] 9090/tcp (v6)              ALLOW IN    Anywhere (v6)              # prometheus
+[16] 5051 (v6)                  ALLOW IN    Anywhere (v6)              # teku-rest-api
 ```
 ### Fix SSD Storage
 ```console
