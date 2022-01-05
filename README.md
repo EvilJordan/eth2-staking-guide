@@ -608,7 +608,8 @@ sudo journalctl -fu teku.service
 ```
 
 ## Fund Validator Keys
+This is an external process describe in various referenced guides. Please follow directions at https://ethereum.org/en/eth2/staking/.
 
-### Watch prater.beachoncha.in and wait
+Watch [prater.beachoncha.in](https://prater.beachoncha.in) and wait for deposits to clear.
 
 ## You’re done! 🎉
