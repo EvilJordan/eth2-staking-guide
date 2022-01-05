@@ -1,6 +1,7 @@
 # ETH2 Self-Staking Guide - TEKU/GETH
 
 This guide built with a combination of:
+- https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 - https://docs.teku.consensys.net/en/stable/
@@ -16,6 +17,8 @@ This guide has references to Prater and is intended to work with the Testnet. Ma
 - Install Ubuntu from USB: https://ubuntu.com/download/server
 - SFTP and SSH clients for remote administration.
 - Additional USB to transfer files from key-generating machine to staking machine if not using local network
+- [Goerli Testnet ETH](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#1.-obtain-testnet-eth)
+- [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
 
 ## Set up Router
 - Assign a static IP to your staking machine.
@@ -543,7 +546,13 @@ sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
 sudo useradd --no-create-home --shell /bin/false teku
 ```
 #### Generate and Handle Validator Keys - External to this guide
-Move generated validator keys and passwords to ` /var/lib/teku/validator_keys`
+
+1. [Generate Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
+2. Create password files for validator keys:
+	- Copy every `keystore-m*.json` file and rename the copies to have `.txt` as the file extension
+	- Open each file and replace all contents with the keystore password created in Step 1.
+3. Move generated validator keys and password files to ` /var/lib/teku/validator_keys`
+	- Use an SFTP program or a USB key to move files to the machine, then folder
 
 Set permissions for keys:
 ```console
@@ -620,7 +629,7 @@ If an `initial-state` is set in the `teku.yaml` configuration file, syncing shou
 https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-mainnet/monitoring-your-validator-with-grafana-and-prometheus#6.2-setting-up-grafana-dashboards
 
 ### Fund Validator Keys
-This is an external process describe in various referenced guides. Please follow directions at https://ethereum.org/en/eth2/staking/.
+This is an external process describe in various referenced guides. Please follow directions at https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad, steps 3-6.
 
 Watch [prater.beachoncha.in](https://prater.beachoncha.in) and wait for deposits to clear.
 
