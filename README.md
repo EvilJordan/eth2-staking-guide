@@ -169,17 +169,17 @@ sudo nano /etc/prometheus/prometheus.yml
 		scrape_interval: 15s
 	scrape_configs:
 		- job_name: "prometheus"
-		static_configs:
-		- targets: ["localhost:9090"]
+		  static_configs:
+		  - targets: ["localhost:9090"]
 		- job_name: "node_exporter"
-		static_configs:
-		- targets: ["localhost:9100"]
+		  static_configs:
+		  - targets: ["localhost:9100"]
 		- job_name: "teku"
-		scrape_timeout: 10s
-		metrics_path: /metrics
-		scheme: http
-		static_configs:
-		- targets: ["localhost:8008"]
+		  scrape_timeout: 10s
+		  metrics_path: /metrics
+		  scheme: http
+		  static_configs:
+		  - targets: ["localhost:8008"]
 sudo chown -R prometheus:prometheus /etc/prometheus/prometheus.yml
 sudo nano /etc/systemd/system/prometheus.service
 	[Unit]
