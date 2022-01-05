@@ -1,20 +1,24 @@
 # ETH2 Staking Guide - PRATER/TEKU/GETH
 
-Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
-
-Install Ubuntu from USB: https://ubuntu.com/download/server
-
-Will need SFTP and SSH clients for remote administration.
-
 This guide built with a combination of:
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 - https://docs.teku.consensys.net/en/stable/
 - https://ethereum.org/en/eth2/staking/
 
-Open remote port on router for SSH access (optional), p2p, and eth1
+## Prerequisites
+- Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
+- Install Ubuntu from USB: https://ubuntu.com/download/server
+- SFTP and SSH clients for remote administration.
+- Additional USB to transfer files from key-generating machine to staking machine if not using local network
 
-### SSH into server and install lolcat (optional):
+## Set up Router
+### Assign a static IP to your staking machine.
+### Open ports on router for SSH access (default port 22) (optional if not managing locally), p2p (9000), and eth1 (30303)
+
+## Set up Staking Machine
+### SSH into server and install lolcat (optional)
+This is personal thing, – no one else needs this.
 ```console
 git clone https://github.com/jaseg/lolcat.git
 cd lolcat
@@ -24,7 +28,6 @@ make
 sudo make install
 rm -rf lolcat
 ```
-
 SFTP into server and replace bash files and authorized_keys (optional)
 
 ### Update server
@@ -110,7 +113,7 @@ ignoreip = 127.0.0.0/8 10.0.0.0/8 192.168.0.0/16
 sudo systemctl restart fail2ban
 ```
 
-### Firewall:
+### Set up the Firewall
 ```console
 # By default, deny all incoming and outgoing traffic
 sudo ufw default deny incoming
@@ -132,7 +135,7 @@ sudo ufw allow 5051 comment teku-rest-api
 # Enable firewall
 sudo ufw enable
 ```
-### Fix SSD Storage:
+### Fix SSD Storage
 ```console
 sudo lvdisplay #
 sudo lvm
