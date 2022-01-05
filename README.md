@@ -1,6 +1,6 @@
 # ETH2 Self-Staking Guide - TEKU/GETH
 
-This guide built with a combination of:
+This guide is built with a combination of information from:
 - https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
