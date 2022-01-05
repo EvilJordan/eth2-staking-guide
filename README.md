@@ -10,6 +10,7 @@ This guide built with a combination of:
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 - https://docs.teku.consensys.net/en/stable/
+- https://ethereum.org/en/eth2/staking/
 
 Open remote port on router for SSH access (optional), p2p, and eth1
 
