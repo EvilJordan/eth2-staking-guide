@@ -5,9 +5,9 @@ Install Ubuntu: https://ubuntu.com/download/server
 Will need SFTP and SSH clients for remote administration.
 
 This guide built with a combination of:
-	https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
-	https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
-	https://docs.teku.consensys.net/en/stable/ (for reference)
+- https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
+- https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
+- https://docs.teku.consensys.net/en/stable/
 
 Open remote port on router for SSH access (optional), p2p, and eth1
 
@@ -125,7 +125,7 @@ sudo apt install libpam-google-authenticator -y
 sudo nano /etc/pam.d/sshd
 	Add:
 		auth required pam_google_authenticator.so
-	Comment out the below line by adding # in front of it:
+	Comment out the below line by adding ### in front of it:
 		@include common-auth
 sudo systemctl restart sshd.service
 sudo nano /etc/ssh/sshd_config
