@@ -564,7 +564,9 @@ Add the following to `teku.yaml`:
 # EXAMPLE FILE - DO NOT CUT AND PASTE WITHOUT CHANGES
 data-base-path: "/var/lib/teku"
 network: "prater"
+# if a backup ETH1 node is desired, replace the endpoint with your information from Infura
 eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
+# if quick-sync is desired, replace the state URL with your information from Infura
 initial-state: "https://XXX:XXX@eth2-beacon-prater.infura.io/eth/v1/debug/beacon/states/finalized"
 validator-keys: "/var/lib/teku/validator_keys:/var/lib/teku/validator_keys"
 validators-graffiti: "XXX"
@@ -573,6 +575,7 @@ p2p-peer-upper-bound: 100
 log-destination: "CONSOLE"
 metrics-enabled: true
 metrics-port: 8008
+# replace hostname with the name of your staking machine
 rest-api-host-allowlist: ["hostname"]
 rest-api-enabled: true
 rest-api-docs-enabled: true
