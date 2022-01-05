@@ -119,6 +119,8 @@ sudo lvdisplay #
 ```
 
 SSH 2FA (optional): https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#setup-two-factor-authentication-for-ssh-optional and https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04
+
+This is Two-Factor Authentication for use with an app like Google Authenticator or Authy for an added layer of security to access the machine. The first layer, is, of course, SSH keys – a process not explained in this guide.
 ```properties
 sudo apt install libpam-google-authenticator -y
 sudo nano /etc/pam.d/sshd
