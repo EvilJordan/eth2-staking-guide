@@ -1,6 +1,8 @@
 # ETH2 Staking Guide - PRATER/TEKU/GETH
 
-Install Ubuntu: https://ubuntu.com/download/server
+Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
+
+Install Ubuntu from USB: https://ubuntu.com/download/server
 
 Will need SFTP and SSH clients for remote administration.
 
@@ -10,10 +12,6 @@ This guide built with a combination of:
 - https://docs.teku.consensys.net/en/stable/
 
 Open remote port on router for SSH access (optional), p2p, and eth1
-
-Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
-
-Install Ubuntu from USB
 
 SSH into server and install lolcat (optional):
 ```properties
