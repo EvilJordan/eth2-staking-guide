@@ -6,6 +6,7 @@ This guide built with a combination of:
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 - https://docs.teku.consensys.net/en/stable/
 - https://ethereum.org/en/eth2/staking/
+- https://launchpad.ethereum.org/en/
 
 ---
 This guide has references to Prater and is intended to work with the Testnet. Mainnet functionality is nearly identical with only a few configurations and parameters changed. Make sure any external interactions through Metamask, ETH2 Launchpad, beaconcha.in match your network expectations.
