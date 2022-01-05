@@ -549,6 +549,8 @@ sudo chmod -R 700 /var/lib/teku/validator_keys
 
 #### Configure Teku:
 👉 You will need to sign up for a free Infura (https://www.infura.io) account and create a new ETH1 project and a new ETH2 project.
+
+Create the Teku configuration:
 ```console
 sudo nano /etc/teku/teku.yaml
 ```
@@ -570,6 +572,7 @@ rest-api-host-allowlist: ["hostname"]
 rest-api-enabled: true
 rest-api-docs-enabled: true
 ```
+Create the Teku service definition:
 ```console
 sudo nano /etc/systemd/system/teku.service
 ```
@@ -590,6 +593,7 @@ ExecStart=/usr/local/bin/teku/bin/teku --config-file=/etc/teku/teku.yaml
 [Install]
 WantedBy=multi-user.target
 ```
+Restart Teku:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start teku
