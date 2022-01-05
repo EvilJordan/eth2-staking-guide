@@ -11,8 +11,9 @@ This guide built with a combination of:
 
 Open remote port on router for SSH access (optional), p2p, and eth1
 
-Set bios to power on on power restore
-Install from USB
+Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
+
+Install Ubuntu from USB
 
 SSH into server and install lolcat (optional):
 ```bash
@@ -25,7 +26,7 @@ sudo make install
 rm -rf lolcat
 ```
 
-SFTP into server and replace bash files and authorized_keys
+SFTP into server and replace bash files and authorized_keys (optional)
 
 Update server: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
 ```bash
@@ -122,101 +123,26 @@ SSH 2FA (optional): https://www.coincashew.com/coins/overview-eth/guide-or-secur
 ```bash
 sudo apt install libpam-google-authenticator -y
 sudo nano /etc/pam.d/sshd
-	auth required pam_google_authenticator.so
+	Add:
+		auth required pam_google_authenticator.so
+	Comment out the below line by adding # in front of it:
+		@include common-auth
 sudo systemctl restart sshd.service
 sudo nano /etc/ssh/sshd_config
 	Set:
 		ChallengeResponseAuthentication yes
 		UsePAM yes
-google-authenticator
-	Answers: yes, yes, no, yes
-sudo nano /etc/ssh/sshd_config
 	Add:
 		AuthenticationMethods publickey,password publickey,keyboard-interactive
-sudo nano /etc/pam.d/sshd
-	Comment out the below line by adding # in front of it:
-		@include common-auth
+google-authenticator
+	Answers: yes, yes, no, yes
 sudo systemctl restart sshd.service
+exit
 ```
+Log back in to server via SSH to see 2FA in action.
+
 Install Prometheus/Grafana/Eth1/Teku: https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 
-Install GETH
-```bash
-sudo add-apt-repository -y ppa:ethereum/ethereum
-sudo apt update
-sudo apt install geth
-sudo useradd --no-create-home --shell /bin/false goeth
-sudo mkdir -p /var/lib/goethereum
-sudo chown -R goeth:goeth /var/lib/goethereum
-sudo nano /etc/systemd/system/geth.service
-	[Unit]
-	Description=Ethereum go client
-	After=network.target 
-	Wants=network.target
-	[Service]
-	User=goeth 
-	Group=goeth
-	Type=simple
-	Restart=always
-	RestartSec=5
-	ExecStart=geth --goerli --http --datadir /var/lib/goethereum
-	[Install]
-	WantedBy=default.target
-sudo systemctl daemon-reload
-sudo systemctl start geth
-sudo systemctl enable geth
-```
-Wait for Geth to sync and monitor:
-
-```bash
-sudo journalctl -fu geth.service
-```
-
-Install Teku:
-```bash
-sudo apt install default-jre default-jdk
-cd ~
-git clone https://github.com/Consensys/teku.git
-cd teku
-sudo ./gradlew installDist
-cd ~
-sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
-sudo useradd --no-create-home --shell /bin/false teku
-```
-
-Generate and Handle Validator Keys - External to this guide
-```bash
-directory location: /var/lib/teku/validator_keys
-sudo chown -R teku:teku /var/lib/teku
-sudo chown -R teku:teku /etc/teku
-sudo chmod -R 700 /var/lib/teku/validator_keys
-```
-
-Configure teku:
-```bash
-sudo nano /etc/teku/teku.yaml
-…
-sudo nano /etc/systemd/system/teku.service
-	[Unit]
-	Description=Teku Client
-	Wants=network-online.target
-	After=network-online.target
-	[Service]
-	Type=simple
-	User=teku
-	Group=teku
-	Restart=always
-	RestartSec=5
-	Environment="JAVA_OPTS=-Xmx5g"
-	ExecStart=/usr/local/bin/teku/bin/teku --config-file=/etc/teku/teku.yaml
-	[Install]
-	WantedBy=multi-user.target
-sudo systemctl daemon-reload
-sudo systemctl start teku
-sudo systemctl status teku
-sudo systemctl enable teku
-sudo journalctl -fu teku.service
-```
 
 Install Prometheus (Modify prometheus to scrape at 3s [optional]):
 ```bash
@@ -323,8 +249,100 @@ sudo systemctl restart grafana-server
 ```
 Install json-exporter to obtain ethusd in Grafana (optional)
 
+Install GETH
+```bash
+sudo add-apt-repository -y ppa:ethereum/ethereum
+sudo apt update
+sudo apt install geth
+sudo useradd --no-create-home --shell /bin/false goeth
+sudo mkdir -p /var/lib/goethereum
+sudo chown -R goeth:goeth /var/lib/goethereum
+sudo nano /etc/systemd/system/geth.service
+	[Unit]
+	Description=Ethereum go client
+	After=network.target 
+	Wants=network.target
+	[Service]
+	User=goeth 
+	Group=goeth
+	Type=simple
+	Restart=always
+	RestartSec=5
+	ExecStart=geth --goerli --http --datadir /var/lib/goethereum
+	[Install]
+	WantedBy=default.target
+sudo systemctl daemon-reload
+sudo systemctl start geth
+sudo systemctl enable geth
+```
+Wait for Geth to sync and monitor with:
+
+```bash
+sudo journalctl -fu geth.service
+```
+
+Install Teku:
+```bash
+sudo apt install default-jre default-jdk
+cd ~
+git clone https://github.com/Consensys/teku.git
+cd teku
+sudo ./gradlew installDist
+cd ~
+sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
+sudo useradd --no-create-home --shell /bin/false teku
+```
+
+Generate and Handle Validator Keys - External to this guide
+```bash
+directory location: /var/lib/teku/validator_keys
+sudo chown -R teku:teku /var/lib/teku
+sudo chown -R teku:teku /etc/teku
+sudo chmod -R 700 /var/lib/teku/validator_keys
+```
+
+Configure Teku:
+```bash
+sudo nano /etc/teku/teku.yaml
+	# EXAMPLE FILE
+	data-base-path: "/var/lib/teku"
+	network: "prater"
+	eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
+	initial-state: "https://XXX:XXX@eth2-beacon-prater.infura.io/eth/v1/debug/beacon/states/finalized"
+	validator-keys: "/var/lib/teku/validator_keys:/var/lib/teku/validator_keys"
+	validators-graffiti: "XXX"
+	p2p-port: 9000
+	p2p-peer-upper-bound: 100
+	log-destination: "CONSOLE"
+	metrics-enabled: true
+	metrics-port: 8008
+	rest-api-host-allowlist: ["hostname"]
+	rest-api-enabled: true
+	rest-api-docs-enabled: true
+sudo nano /etc/systemd/system/teku.service
+	[Unit]
+	Description=Teku Client
+	Wants=network-online.target
+	After=network-online.target
+	[Service]
+	Type=simple
+	User=teku
+	Group=teku
+	Restart=always
+	RestartSec=5
+	Environment="JAVA_OPTS=-Xmx5g"
+	ExecStart=/usr/local/bin/teku/bin/teku --config-file=/etc/teku/teku.yaml
+	[Install]
+	WantedBy=multi-user.target
+sudo systemctl daemon-reload
+sudo systemctl start teku
+sudo systemctl status teku
+sudo systemctl enable teku
+sudo journalctl -fu teku.service
+```
+
 Fund Validator Keys
 
-Watch Beachoncha.in and wait
+Watch prater.beachoncha.in and wait
 
 You’re done!
