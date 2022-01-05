@@ -1,5 +1,4 @@
-# eth2-staking-guide
-ETH2 Staking Guide - PRATER TESTNET
+# ETH2 Staking Guide - PRATER/TEKU/GETH
 
 Install Ubuntu: https://ubuntu.com/download/server
 Will need SFTP and SSH clients
