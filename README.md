@@ -606,4 +606,4 @@ sudo journalctl -fu teku.service
 
 ### Watch prater.beachoncha.in and wait
 
-## You’re done!
+## You’re done! 🎉
