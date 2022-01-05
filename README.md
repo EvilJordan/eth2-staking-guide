@@ -2,7 +2,7 @@
 
 Install Ubuntu: https://ubuntu.com/download/server
 
-Will need SFTP and SSH clients
+Will need SFTP and SSH clients for remote administration.
 
 This guide built with a combination of:
 	https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
@@ -302,6 +302,8 @@ sudo chmod -R 700 /var/lib/teku/validator_keys
 ```
 
 Configure Teku:
+
+👉 You will need to sign up for a free Infura (https://www.infura.io) account and create a new ETH1 project and a new ETH2 project.
 ```bash
 sudo nano /etc/teku/teku.yaml
 	# EXAMPLE FILE
