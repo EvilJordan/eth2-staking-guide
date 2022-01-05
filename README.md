@@ -410,7 +410,7 @@ sudo adduser --system json_exporter --group --no-create-home
 ```
 #### Install json_exporter
 ```console
-cd
+cd ~
 git clone https://github.com/prometheus-community/json_exporter.git
 cd json_exporter
 make build
