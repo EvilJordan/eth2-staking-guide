@@ -251,6 +251,12 @@ Log back in to server via SSH to see 2FA in action.
 
 ## Install Prometheus/Grafana/Eth1/Teku
 ### Install Prometheus
+Determine the latest release version by visiting: https://github.com/prometheus/prometheus/releases
+
+As of this writing, the latest release is `v2.32.1`
+
+Replace any occurance of an incorrect release version below with the latest.
+
 ```console
 sudo useradd --no-create-home --shell /bin/false prometheus
 sudo useradd --no-create-home --shell /bin/false node_exporter
@@ -345,7 +351,12 @@ sudo systemctl start prometheus
 sudo systemctl status prometheus
 sudo systemctl enable prometheus
 ```
-### Install Node Exporter:
+### Install Node Exporter
+Determine the latest release version by visiting: https://github.com/prometheus/node_exporter/releases
+
+As of this writing, the latest release is `v1.3.1`
+
+Replace any occurance of an incorrect release version below with the latest.
 ```console
 cd ~
 curl -LO https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz
