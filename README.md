@@ -611,9 +611,12 @@ sudo journalctl -fu teku.service
 ```
 Teku needs to sync to the Beacon Chain before proceeding with the funding of validators by sending ETH to the staking contract. If an `initial-state` is set in the `teku.yaml` configuration file, syncing should happen very rapidly.
 
-## Fund Validator Keys
+### Monitoring
+https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-mainnet/monitoring-your-validator-with-grafana-and-prometheus#6.2-setting-up-grafana-dashboards
+
+### Fund Validator Keys
 This is an external process describe in various referenced guides. Please follow directions at https://ethereum.org/en/eth2/staking/.
 
 Watch [prater.beachoncha.in](https://prater.beachoncha.in) and wait for deposits to clear.
 
-## You’re done! 🎉
+### You’re done! 🎉
