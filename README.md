@@ -1,10 +1,15 @@
-# ETH2 Staking Guide - PRATER/TEKU/GETH
+# ETH2 Staking Guide - TEKU/GETH
 
 This guide built with a combination of:
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 - https://docs.teku.consensys.net/en/stable/
 - https://ethereum.org/en/eth2/staking/
+
+---
+This guide has references to Prater and is intended to work with the Testnet. Mainnet functionality is nearly identical with only a few configurations and parameters changed. Make sure any external interactions through Metamask, ETH2 Launchpad, beaconcha.in match your network expectations.
+
+---
 
 ## Prerequisites
 - Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
