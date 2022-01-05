@@ -27,14 +27,16 @@ rm -rf lolcat
 
 SFTP into server and replace bash files and authorized_keys (optional)
 
-### Update server: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
+### Update server
+https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
 ```console
 sudo apt-get update -y && sudo apt dist-upgrade -y
 sudo apt-get autoremove
 sudo apt-get autoclean
 ```
 
-### Enable automatic upgrades: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
+### Enable automatic upgrades
+https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
 ```console
 sudo apt-get install unattended-upgrades
 sudo dpkg-reconfigure -plow unattended-upgrades
@@ -51,7 +53,8 @@ Edit name and device in `apceupsd.conf`:
 sudo reboot
 ```
 
-### SSH Lockdown: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-ssh-password-authentication-and-use-ssh-keys-only
+### SSH Lockdown
+https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-ssh-password-authentication-and-use-ssh-keys-only
 ```console
 sudo nano /etc/ssh/sshd_config
 ```
@@ -68,7 +71,8 @@ PermitEmptyPasswords no
 sudo sshd -t
 ```
 
-### Disable root account: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-root-account
+### Disable root account
+https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-root-account
 ```console
 sudo passwd -l root
 ```
@@ -86,7 +90,8 @@ tmpfs	/run/shm	tmpfs	ro,noexec,nosuid	0	0
 sudo reboot
 ```
 
-### Install Fail2Ban: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#install-fail2ban
+### Install Fail2Ban
+https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#install-fail2ban
 ```console
 sudo apt-get install fail2ban -y
 sudo nano /etc/fail2ban/jail.local
