@@ -526,7 +526,7 @@ geth attach http://127.0.0.1:8545
 ```
 And looking for a return value of `false`
 
-### Install Teku:
+### Install Teku
 ```console
 sudo apt install default-jre default-jdk
 cd ~
@@ -538,8 +538,10 @@ sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
 sudo useradd --no-create-home --shell /bin/false teku
 ```
 #### Generate and Handle Validator Keys - External to this guide
+Move generated validator keys and passwords to ` /var/lib/teku/validator_keys`
+
+Set permissions for keys:
 ```console
-directory location: /var/lib/teku/validator_keys
 sudo chown -R teku:teku /var/lib/teku
 sudo chown -R teku:teku /etc/teku
 sudo chmod -R 700 /var/lib/teku/validator_keys
@@ -552,7 +554,7 @@ sudo nano /etc/teku/teku.yaml
 ```
 Add the following to `teku.yaml`:
 ```properties
-# EXAMPLE FILE
+# EXAMPLE FILE - DO NOT CUT AND PASTE WITHOUT CHANGES
 data-base-path: "/var/lib/teku"
 network: "prater"
 eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
