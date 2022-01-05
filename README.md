@@ -15,7 +15,7 @@ This guide built with a combination of:
 Open remote port on router for SSH access (optional), p2p, and eth1
 
 SSH into server and install lolcat (optional):
-```properties
+```console
 git clone https://github.com/jaseg/lolcat.git
 cd lolcat
 sudo apt install make
@@ -28,20 +28,20 @@ rm -rf lolcat
 SFTP into server and replace bash files and authorized_keys (optional)
 
 Update server: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
-```properties
+```console
 sudo apt-get update -y && sudo apt dist-upgrade -y
 sudo apt-get autoremove
 sudo apt-get autoclean
 ```
 
 Enable automatic upgrades: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
-```properties
+```console
 sudo apt-get install unattended-upgrades
 sudo dpkg-reconfigure -plow unattended-upgrades
 ```
 
 Install apcupsd (optional for UPS backups - requires USB cable):
-```properties
+```console
 sudo apt-get install apcupsd
 sudo nano /etc/apcupsd/apcupsd.conf
 	Edit name and device
@@ -49,7 +49,7 @@ sudo reboot
 ```
 
 SSH Lockdown: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-ssh-password-authentication-and-use-ssh-keys-only
-```properties
+```console
 sudo nano /etc/ssh/sshd_config
 	ChallengeResponseAuthentication no
 	PasswordAuthentication no
@@ -59,19 +59,19 @@ sudo sshd -t
 ```
 
 Disable root account: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-root-account
-```properties
+```console
 sudo passwd -l root
 ```
 
 Secure Shared Memory: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#secure-shared-memory
-```properties
+```console
 sudo nano /etc/fstab
 	tmpfs	/run/shm	tmpfs	ro,noexec,nosuid	0	0
 sudo reboot
 ```
 
 Install Fail2Ban: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#install-fail2ban
-```properties
+```console
 sudo apt-get install fail2ban -y
 sudo nano /etc/fail2ban/jail.local
 	[sshd]
@@ -107,7 +107,7 @@ sudo ufw allow 5051 comment teku-rest-api
 sudo ufw enable
 ```
 Fix SSD Storage:
-```properties
+```console
 sudo lvdisplay #
 sudo lvm
 > lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
@@ -121,7 +121,7 @@ sudo lvdisplay #
 SSH 2FA (optional): https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#setup-two-factor-authentication-for-ssh-optional and https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04
 
 This is Two-Factor Authentication for use with an app like Google Authenticator or Authy for an added layer of security to access the machine. The first layer, is, of course, SSH keys – a process not explained in this guide.
-```properties
+```console
 sudo apt install libpam-google-authenticator -y
 sudo nano /etc/pam.d/sshd
 	Add:
@@ -146,7 +146,7 @@ Install Prometheus/Grafana/Eth1/Teku: https://someresat.medium.com/guide-to-stak
 
 
 Install Prometheus (Modify prometheus to scrape at 3s [optional]):
-```properties
+```console
 sudo useradd --no-create-home --shell /bin/false prometheus
 sudo useradd --no-create-home --shell /bin/false node_exporter
 sudo mkdir /etc/prometheus
@@ -180,6 +180,22 @@ sudo nano /etc/prometheus/prometheus.yml
 		  scheme: http
 		  static_configs:
 		  - targets: ["localhost:8008"]
+		- job_name: json_exporter
+		  static_configs:
+		  - targets:
+		    - 127.0.0.1:7979
+		- job_name: json
+		  metrics_path: /probe
+		  static_configs:
+		  - targets:
+		    - https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+		  relabel_configs:
+		  - source_labels: [__address__]
+		    target_label: __param_target
+		  - source_labels: [__param_target]
+		    target_label: instance
+		  - target_label: __address__
+		    replacement: 127.0.0.1:7979
 sudo chown -R prometheus:prometheus /etc/prometheus/prometheus.yml
 sudo nano /etc/systemd/system/prometheus.service
 	[Unit]
@@ -205,7 +221,7 @@ sudo systemctl status prometheus
 sudo systemctl enable prometheus
 ```
 Install Node Exporter:
-```properties
+```console
 cd ~
 curl -LO https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz
 tar xvf node_exporter-1.3.1.linux-amd64.tar.gz
@@ -231,8 +247,93 @@ sudo systemctl status node_exporter
 sudo systemctl enable node_exporter
 ```
 
+### Install json_exporter
+#### Install go
+```console
+sudo apt-get install golang-1.14-go
+
+# Create a symlink from /usr/bin/go to the new go installation
+sudo ln -s /usr/lib/go-1.14/bin/go /usr/bin/go
+```
+
+#### Create User Account
+```console
+sudo adduser --system json_exporter --group --no-create-home
+```
+
+#### Install json_exporter
+```console
+cd
+git clone https://github.com/prometheus-community/json_exporter.git
+cd json_exporter
+make build
+sudo cp json_exporter /usr/local/bin/
+sudo chown json_exporter:json_exporter /usr/local/bin/json_exporter
+```
+
+#### Configure json_exporter
+Create a directory for the json_exporter configuration file, and make it owned by the json_exporter account.
+
+```console
+sudo mkdir /etc/json_exporter
+sudo chown json_exporter:json_exporter /etc/json_exporter
+```
+
+Edit the json_exporter configuration file.
+
+```console
+sudo nano /etc/json_exporter/json_exporter.yml
+```
+
+Copy and paste the following text into the json_exporter.yml file. 
+
+```
+metrics:
+- name: ethusd
+  path: "{.ethereum.usd}"
+  help: Ethereum (ETH) price in USD
+```
+
+Change ownership of the configuration file to the json_exporter account.
+
+```console
+sudo chown json_exporter:json_exporter /etc/json_exporter/json_exporter.yml
+```
+
+#### Set Up System Service
+Set up systemd to automatically start json_exporter. It will also restart the software if it stops.
+
+```console
+sudo nano /etc/systemd/system/json_exporter.service
+```
+
+Copy and paste the following text into the json_exporter.service file.
+
+```
+[Unit]
+Description=JSON Exporter
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=5
+User=json_exporter
+ExecStart=/usr/local/bin/json_exporter --config.file /etc/json_exporter/json_exporter.yml
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload the systemd service file configurations, start node_exporter, then enable the json_exporter service to have it start automatically on reboot.
+
+```console
+sudo systemctl daemon-reload
+sudo systemctl start json_exporter.service
+sudo systemctl enable json_exporter.service
+```
+
 Install Grafana:
-```properties
+```console
 curl -s -0 https://packages.grafana.com/gpg.key | sudo apt-key add -
 sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
 sudo apt update
@@ -243,15 +344,14 @@ sudo systemctl enable grafana-server
 ```
 
 Modify Grafana.ini to allow higher rate:
-```properties
+```console
 sudo nano /etc/grafana/grafana.ini
 ;min_refresh_interval = 1s
 sudo systemctl restart grafana-server
 ```
-Install json-exporter to obtain ethusd in Grafana (optional)
 
 Install GETH
-```properties
+```console
 sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt update
 sudo apt install geth
@@ -278,12 +378,12 @@ sudo systemctl enable geth
 ```
 Wait for Geth to sync and monitor with:
 
-```properties
+```console
 sudo journalctl -fu geth.service
 ```
 
 Install Teku:
-```properties
+```console
 sudo apt install default-jre default-jdk
 cd ~
 git clone https://github.com/Consensys/teku.git
@@ -295,7 +395,7 @@ sudo useradd --no-create-home --shell /bin/false teku
 ```
 
 Generate and Handle Validator Keys - External to this guide
-```properties
+```console
 directory location: /var/lib/teku/validator_keys
 sudo chown -R teku:teku /var/lib/teku
 sudo chown -R teku:teku /etc/teku
@@ -305,7 +405,7 @@ sudo chmod -R 700 /var/lib/teku/validator_keys
 Configure Teku:
 
 👉 You will need to sign up for a free Infura (https://www.infura.io) account and create a new ETH1 project and a new ETH2 project.
-```properties
+```console
 sudo nano /etc/teku/teku.yaml
 	# EXAMPLE FILE
 	data-base-path: "/var/lib/teku"
