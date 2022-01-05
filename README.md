@@ -292,7 +292,7 @@ sudo nano /etc/prometheus/prometheus.yml
 Make sure the `prometheus.yml` file includes the below configuration. Pay special attention to spacing. Two _spaces_ are required for each indentation.
 
 Optionally, change `scrape_interval: 3s` and `scape_timeout: 2s` for faster metrics updating at the expense of CPU load.
-```properties
+```yaml
 global:
 	scrape_interval: 15s
 scrape_configs:
@@ -430,7 +430,7 @@ Edit the `json_exporter.yml` configuration file:
 sudo nano /etc/json_exporter/json_exporter.yml
 ```
 Add the following text into the `json_exporter.yml` file. 
-```propeties
+```yaml
 metrics:
 - name: ethusd
   path: "{.ethereum.usd}"
@@ -570,7 +570,7 @@ Create the Teku configuration:
 sudo nano /etc/teku/teku.yaml
 ```
 Add the following to `teku.yaml`:
-```properties
+```yaml
 # EXAMPLE FILE - DO NOT CUT AND PASTE WITHOUT CHANGES
 data-base-path: "/var/lib/teku"
 network: "prater"
