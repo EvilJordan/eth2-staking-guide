@@ -16,7 +16,7 @@ Set bios to power-on on power restore (hold F2 during power-on to enter BIOS)
 Install Ubuntu from USB
 
 SSH into server and install lolcat (optional):
-```bash
+```properties
 git clone https://github.com/jaseg/lolcat.git
 cd lolcat
 sudo apt install make
@@ -29,20 +29,20 @@ rm -rf lolcat
 SFTP into server and replace bash files and authorized_keys (optional)
 
 Update server: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
-```bash
+```properties
 sudo apt-get update -y && sudo apt dist-upgrade -y
 sudo apt-get autoremove
 sudo apt-get autoclean
 ```
 
 Enable automatic upgrades: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
-```
+```properties
 sudo apt-get install unattended-upgrades
 sudo dpkg-reconfigure -plow unattended-upgrades
 ```
 
 Install apcupsd (optional for UPS backups - requires USB cable):
-```bash
+```properties
 sudo apt-get install apcupsd
 sudo nano /etc/apcupsd/apcupsd.conf
 	Edit name and device
@@ -50,7 +50,7 @@ sudo reboot
 ```
 
 SSH Lockdown: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-ssh-password-authentication-and-use-ssh-keys-only
-```bash
+```properties
 sudo nano /etc/ssh/sshd_config
 	ChallengeResponseAuthentication no
 	PasswordAuthentication no
@@ -60,19 +60,19 @@ sudo sshd -t
 ```
 
 Disable root account: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-root-account
-```bash
+```properties
 sudo passwd -l root
 ```
 
 Secure Shared Memory: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#secure-shared-memory
-```bash
+```properties
 sudo nano /etc/fstab
 	tmpfs	/run/shm	tmpfs	ro,noexec,nosuid	0	0
 sudo reboot
 ```
 
 Install Fail2Ban: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#install-fail2ban
-```bash
+```properties
 sudo apt-get install fail2ban -y
 sudo nano /etc/fail2ban/jail.local
 	[sshd]
@@ -108,7 +108,7 @@ sudo ufw allow 5051 comment teku-rest-api
 sudo ufw enable
 ```
 Fix SSD Storage:
-```bash
+```properties
 sudo lvdisplay #
 sudo lvm
 > lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
@@ -120,12 +120,12 @@ sudo lvdisplay #
 ```
 
 SSH 2FA (optional): https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#setup-two-factor-authentication-for-ssh-optional and https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04
-```bash
+```properties
 sudo apt install libpam-google-authenticator -y
 sudo nano /etc/pam.d/sshd
 	Add:
 		auth required pam_google_authenticator.so
-	Comment out the below line by adding \#  in front of it:
+	Comment out the below line by adding # in front of it:
 		@include common-auth
 sudo systemctl restart sshd.service
 sudo nano /etc/ssh/sshd_config
@@ -145,7 +145,7 @@ Install Prometheus/Grafana/Eth1/Teku: https://someresat.medium.com/guide-to-stak
 
 
 Install Prometheus (Modify prometheus to scrape at 3s [optional]):
-```bash
+```properties
 sudo useradd --no-create-home --shell /bin/false prometheus
 sudo useradd --no-create-home --shell /bin/false node_exporter
 sudo mkdir /etc/prometheus
@@ -170,9 +170,9 @@ sudo nano /etc/prometheus/prometheus.yml
 		- job_name: "prometheus"
 		static_configs:
 		- targets: ["localhost:9090"]
-		- job_name: “node_exporter”
+		- job_name: "node_exporter"
 		static_configs:
-		- targets: [“localhost:9100”]
+		- targets: ["localhost:9100"]
 		- job_name: "teku"
 		scrape_timeout: 10s
 		metrics_path: /metrics
@@ -204,7 +204,7 @@ sudo systemctl status prometheus
 sudo systemctl enable prometheus
 ```
 Install Node Exporter:
-```bash
+```properties
 cd ~
 curl -LO https://github.com/prometheus/node_exporter/releases/download/v1.3.1/node_exporter-1.3.1.linux-amd64.tar.gz
 tar xvf node_exporter-1.3.1.linux-amd64.tar.gz
@@ -231,7 +231,7 @@ sudo systemctl enable node_exporter
 ```
 
 Install Grafana:
-```bash
+```properties
 curl -s -0 https://packages.grafana.com/gpg.key | sudo apt-key add -
 sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
 sudo apt update
@@ -242,7 +242,7 @@ sudo systemctl enable grafana-server
 ```
 
 Modify Grafana.ini to allow higher rate:
-```bash
+```properties
 sudo nano /etc/grafana/grafana.ini
 ;min_refresh_interval = 1s
 sudo systemctl restart grafana-server
@@ -250,7 +250,7 @@ sudo systemctl restart grafana-server
 Install json-exporter to obtain ethusd in Grafana (optional)
 
 Install GETH
-```bash
+```properties
 sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt update
 sudo apt install geth
@@ -277,12 +277,12 @@ sudo systemctl enable geth
 ```
 Wait for Geth to sync and monitor with:
 
-```bash
+```properties
 sudo journalctl -fu geth.service
 ```
 
 Install Teku:
-```bash
+```properties
 sudo apt install default-jre default-jdk
 cd ~
 git clone https://github.com/Consensys/teku.git
@@ -294,7 +294,7 @@ sudo useradd --no-create-home --shell /bin/false teku
 ```
 
 Generate and Handle Validator Keys - External to this guide
-```bash
+```properties
 directory location: /var/lib/teku/validator_keys
 sudo chown -R teku:teku /var/lib/teku
 sudo chown -R teku:teku /etc/teku
@@ -304,7 +304,7 @@ sudo chmod -R 700 /var/lib/teku/validator_keys
 Configure Teku:
 
 👉 You will need to sign up for a free Infura (https://www.infura.io) account and create a new ETH1 project and a new ETH2 project.
-```bash
+```properties
 sudo nano /etc/teku/teku.yaml
 	# EXAMPLE FILE
 	data-base-path: "/var/lib/teku"
