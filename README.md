@@ -172,13 +172,21 @@ Status: active
 [16] 5051 (v6)                  ALLOW IN    Anywhere (v6)              # teku-rest-api
 ```
 ### Fix SSD Storage
+Check current configuration:
 ```console
+df -h #
 sudo lvdisplay #
+```
+Change configuration:
+```console
 sudo lvm
 > lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
 > lvextend -l +100%FREE -r /dev/ubuntu-vg/ubuntu-lv
 > exit
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
+```
+Check new configuration:
+```console
 df -h #
 sudo lvdisplay #
 ```
