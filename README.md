@@ -402,7 +402,6 @@ sudo systemctl enable node_exporter
 #### Install go:
 ```console
 sudo apt-get install golang-1.14-go
-# Create a symlink from /usr/bin/go to the new go installation:
 sudo ln -s /usr/lib/go-1.14/bin/go /usr/bin/go
 ```
 #### Create User Account
