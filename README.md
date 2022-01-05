@@ -13,8 +13,8 @@ This guide built with a combination of:
 - Additional USB to transfer files from key-generating machine to staking machine if not using local network
 
 ## Set up Router
-### Assign a static IP to your staking machine.
-### Open ports on router for SSH access (default port 22) (optional if not managing locally), p2p (9000), and eth1 (30303)
+- Assign a static IP to your staking machine.
+- Open ports on router for SSH access (default port 22) (optional if not managing locally), p2p (9000), and eth1 (30303)
 
 ## Set up Staking Machine
 ### SSH into server and install lolcat (optional)
