@@ -294,36 +294,36 @@ Make sure the `prometheus.yml` file includes the below configuration. Pay specia
 Optionally, change `scrape_interval: 3s` and `scape_timeout: 2s` for faster metrics updating at the expense of CPU load.
 ```yaml
 global:
-	scrape_interval: 15s
+  scrape_interval: 15s
 scrape_configs:
-	- job_name: "prometheus"
-		static_configs:
-		- targets: ["localhost:9090"]
-	- job_name: "node_exporter"
-		static_configs:
-		- targets: ["localhost:9100"]
-	- job_name: "teku"
-		scrape_timeout: 10s
-		metrics_path: /metrics
-		scheme: http
-		static_configs:
-		- targets: ["localhost:8008"]
-	- job_name: json_exporter
-		static_configs:
-		- targets:
-		- 127.0.0.1:7979
-	- job_name: json
-		metrics_path: /probe
-		static_configs:
-		- targets:
-		- https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
-		relabel_configs:
-		- source_labels: [__address__]
-		target_label: __param_target
-		- source_labels: [__param_target]
-		target_label: instance
-		- target_label: __address__
-		replacement: 127.0.0.1:7979
+  - job_name: "prometheus"
+    static_configs:
+    - targets: ["localhost:9090"]
+  - job_name: "node_exporter"
+    static_configs:
+    - targets: ["localhost:9100"]
+  - job_name: "teku"
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+    - targets: ["localhost:8008"]
+  - job_name: json_exporter
+    static_configs:
+    - targets:
+    - 127.0.0.1:7979
+  - job_name: json
+    metrics_path: /probe
+    static_configs:
+    - targets:
+    - https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+    relabel_configs:
+    - source_labels: [__address__]
+    target_label: __param_target
+    - source_labels: [__param_target]
+    target_label: instance
+    - target_label: __address__
+    replacement: 127.0.0.1:7979
 ```
 Change permissions on the `prometheus.yml` file:
 ```console
