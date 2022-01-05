@@ -604,8 +604,12 @@ sudo systemctl daemon-reload
 sudo systemctl start teku
 sudo systemctl status teku
 sudo systemctl enable teku
+```
+Monitor Beacon Chain syncing progress, peers, and other information:
+```console
 sudo journalctl -fu teku.service
 ```
+Teku needs to sync to the Beacon Chain before proceeding with the funding of validators by sending ETH to the staking contract. If an `initial-state` is set in the `teku.yaml` configuration file, syncing should happen very rapidly.
 
 ## Fund Validator Keys
 This is an external process describe in various referenced guides. Please follow directions at https://ethereum.org/en/eth2/staking/.
