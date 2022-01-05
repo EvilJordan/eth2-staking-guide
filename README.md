@@ -31,7 +31,6 @@ rm -rf lolcat
 SFTP into server and replace bash files and authorized_keys (optional)
 
 ### Update server
-https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
 ```console
 sudo apt-get update -y && sudo apt dist-upgrade -y
 sudo apt-get autoremove
@@ -39,7 +38,6 @@ sudo apt-get autoclean
 ```
 
 ### Enable automatic upgrades
-https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#update-your-system
 ```console
 sudo apt-get install unattended-upgrades
 sudo dpkg-reconfigure -plow unattended-upgrades
@@ -57,7 +55,6 @@ sudo reboot
 ```
 
 ### SSH Lockdown
-https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-ssh-password-authentication-and-use-ssh-keys-only
 ```console
 sudo nano /etc/ssh/sshd_config
 ```
@@ -75,12 +72,11 @@ sudo sshd -t
 ```
 
 ### Disable root account
-https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#disable-root-account
 ```console
 sudo passwd -l root
 ```
 
-###Secure Shared Memory: https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#secure-shared-memory
+### Secure Shared Memory
 ```console
 sudo nano /etc/fstab
 ```
@@ -94,7 +90,6 @@ sudo reboot
 ```
 
 ### Install Fail2Ban
-https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#install-fail2ban
 ```console
 sudo apt-get install fail2ban -y
 sudo nano /etc/fail2ban/jail.local
@@ -148,9 +143,7 @@ sudo lvdisplay #
 ```
 
 ### Install SSH 2FA (optional)
-https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node#setup-two-factor-authentication-for-ssh-optional and https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04
-
-This is Two-Factor Authentication for use with an app like Google Authenticator or Authy for an added layer of security to access the machine. The first layer, is, of course, SSH keys – a process not explained in this guide.
+This is Two-Factor Authentication for use with an app like Google Authenticator or Authy for an added layer of security to access the machine. The first layer, is, of course, SSH keys – a process not explained in this guide. Supplemental information about this process can be found [here](https://www.digitalocean.com/community/tutorials/how-to-set-up-multi-factor-authentication-for-ssh-on-ubuntu-18-04).
 ```console
 sudo apt install libpam-google-authenticator -y
 ```
@@ -204,8 +197,6 @@ exit
 Log back in to server via SSH to see 2FA in action.
 
 ## Install Prometheus/Grafana/Eth1/Teku
-https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
-
 ### Install Prometheus
 ```console
 sudo useradd --no-create-home --shell /bin/false prometheus
