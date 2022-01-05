@@ -280,7 +280,7 @@ Edit the `prometheus.yml` file:
 ```console
 sudo nano /etc/prometheus/prometheus.yml
 ```
-Make sure the `prometheus.yml` file includes this configuration.
+Make sure the `prometheus.yml` file includes the below configuration. Pay special attention to spacing. Two _spaces_ are required for each indentation.
 
 Optionally, change `scrape_interval: 3s` and `scape_timeout: 2s` for faster metrics updating at the expense of CPU load.
 ```properties
