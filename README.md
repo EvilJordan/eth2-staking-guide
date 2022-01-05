@@ -1,4 +1,4 @@
-# ETH2 Staking Guide - TEKU/GETH
+# ETH2 Self-Staking Guide - TEKU/GETH
 
 This guide built with a combination of:
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
