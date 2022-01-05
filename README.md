@@ -481,23 +481,35 @@ sudo systemctl restart grafana-server
 sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt update
 sudo apt install geth
+```
+Set permissions for geth:
+```console
 sudo useradd --no-create-home --shell /bin/false goeth
 sudo mkdir -p /var/lib/goethereum
 sudo chown -R goeth:goeth /var/lib/goethereum
+```
+Configure geth:
+```console
 sudo nano /etc/systemd/system/geth.service
-	[Unit]
-	Description=Ethereum go client
-	After=network.target 
-	Wants=network.target
-	[Service]
-	User=goeth 
-	Group=goeth
-	Type=simple
-	Restart=always
-	RestartSec=5
-	ExecStart=geth --goerli --http --datadir /var/lib/goethereum
-	[Install]
-	WantedBy=default.target
+```
+Add the following to the `geth.service` file:
+```properties
+[Unit]
+Description=Ethereum go client
+After=network.target 
+Wants=network.target
+[Service]
+User=goeth 
+Group=goeth
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=geth --goerli --http --datadir /var/lib/goethereum
+[Install]
+WantedBy=default.target
+```
+Reload geth:
+```console
 sudo systemctl daemon-reload
 sudo systemctl start geth
 sudo systemctl enable geth
@@ -507,6 +519,12 @@ Wait for Geth to sync and monitor with:
 ```console
 sudo journalctl -fu geth.service
 ```
+Monitoring of the sync process **which must be complete before proceeding** can also be performed with:
+```console
+geth attach http://127.0.0.1:8545
+> eth.syncing
+```
+And looking for a return value of `false`
 
 ### Install Teku:
 ```console
