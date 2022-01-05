@@ -552,7 +552,7 @@ sudo chown -R teku:teku /etc/teku
 sudo chmod -R 700 /var/lib/teku/validator_keys
 ```
 
-#### Configure Teku:
+#### Configure Teku
 👉 You will need to sign up for a free Infura (https://www.infura.io) account and create a new ETH1 project and a new ETH2 project.
 
 Create the Teku configuration:
