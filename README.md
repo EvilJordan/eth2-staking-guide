@@ -125,7 +125,7 @@ sudo apt install libpam-google-authenticator -y
 sudo nano /etc/pam.d/sshd
 	Add:
 		auth required pam_google_authenticator.so
-	Comment out the below line by adding ### in front of it:
+	Comment out the below line by adding \#  in front of it:
 		@include common-auth
 sudo systemctl restart sshd.service
 sudo nano /etc/ssh/sshd_config
