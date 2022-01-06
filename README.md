@@ -585,7 +585,7 @@ log-destination: "CONSOLE"
 metrics-enabled: true
 metrics-port: 8008
 # replace hostname with the name of your staking machine
-rest-api-host-allowlist: ["hostname"]
+rest-api-host-allowlist: ["localhost", "127.0.0.1", "hostname"]
 rest-api-enabled: true
 rest-api-docs-enabled: true
 ```
