@@ -537,12 +537,11 @@ Wait for Geth to sync and monitor with:
 ```console
 sudo journalctl -fu geth.service
 ```
-Monitoring of the sync process **which must be complete before proceeding** can also be performed with:
+Monitoring of the sync process **which must be complete before proceeding** can also be performed with the following commmands and looking for a return value of `false`. Anything else means syncing is still in progress
 ```console
 geth attach http://127.0.0.1:8545
 > eth.syncing
 ```
-And looking for a return value of `false`
 
 ### Install Teku
 ```console
