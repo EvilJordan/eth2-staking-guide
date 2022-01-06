@@ -307,6 +307,12 @@ scrape_configs:
   - job_name: "node_exporter"
     static_configs:
     - targets: ["localhost:9100"]
+  - job_name: 'geth'
+    scrape_timeout: 10s
+    metrics_path: /debug/metrics/prometheus
+    scheme: http
+    static_configs:
+    - targets: ['localhost:6060']
   - job_name: "teku"
     scrape_timeout: 10s
     metrics_path: /metrics
@@ -491,6 +497,25 @@ sudo nano /etc/grafana/grafana.ini
 ;min_refresh_interval = 1s
 sudo systemctl restart grafana-server
 ```
+
+#### Grafana Dashboards
+1. Open `http://localhost:3000` or `http://<your validator's ip address or name>:3000` in your local browser.
+2. Login with `admin` / `admin`
+3. Change password
+4. Click the `configuration gear` icon, then `Add Data Source`
+5. Select `Prometheus`
+6. Set Name to "Prometheus"
+7. Set URL to `http://localhost:9090`
+8. Click `Save & Test`
+9. Download and save your consensus client's json file: [Teku](https://grafana.com/api/dashboards/13457/revisions/2/download)
+10. Download and save your execution client's json file: [Geth](https://gist.githubusercontent.com/karalabe/e7ca79abdec54755ceae09c08bd090cd/raw/3a400ab90f9402f2233280afd086cb9d6aac2111/dashboard.json)
+11. Download and save a [node-exporter dashboard](https://grafana.com/api/dashboards/11074/revisions/9/download) for general system monitoring.
+12. Click Create `+` icon > `Import`
+13. Add the consensus client dashboard via `Upload JSON file`
+14. If needed, select Prometheus as `Data Source`.
+15. Click the `Import` button.
+16. Repeat steps 12-15 for the execution client dashboard.
+17. Repeat steps 12-15 for the node-exporter dashboard.
 
 ### Install GETH
 ```console
