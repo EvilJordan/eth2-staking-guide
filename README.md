@@ -238,15 +238,12 @@ Add the following to the `sshd_config` file:
 ```properties
 AuthenticationMethods publickey,password publickey,keyboard-interactive
 ```
-Confirm `sshd`'s configuration is error-free:
-```console
-sudo sshd -t
-```
 Set up 2FA:
 ```console
 google-authenticator
 ```
 Answers to `google-authenticator` setup:
+- yes
 - yes
 - yes
 - no
