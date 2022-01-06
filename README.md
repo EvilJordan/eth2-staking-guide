@@ -26,6 +26,7 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
 - Open ports on router for SSH access (default port 22) (optional if not managing locally), p2p (9000), and eth1 (30303)
 
 ## Set up Staking Machine
+
 ### SSH into server and install lolcat (optional)
 This is personal thing, – no one else needs this.
 ```console
@@ -52,69 +53,9 @@ sudo apt-get install unattended-upgrades
 sudo dpkg-reconfigure -plow unattended-upgrades
 ```
 
-### Install apcupsd (optional for UPS backups - requires USB cable):
-```console
-sudo apt-get install apcupsd
-sudo nano /etc/apcupsd/apcupsd.conf
-```
-Edit name and device in `apceupsd.conf`:
-
-```console
-sudo reboot
-```
-
-### SSH Lockdown
-```console
-sudo nano /etc/ssh/sshd_config
-```
-Edit `sshd_config`:
-
-```properties
-ChallengeResponseAuthentication no
-PasswordAuthentication no
-PermitRootLogin prohibit-password
-PermitEmptyPasswords no
-```
-Confirm `sshd`'s configuration is error-free:
-```console
-sudo sshd -t
-```
-
 ### Disable root account
 ```console
 sudo passwd -l root
-```
-
-### Secure Shared Memory
-```console
-sudo nano /etc/fstab
-```
-Add the following line to `fstab`:
-```properties
-tmpfs	/run/shm	tmpfs	ro,noexec,nosuid	0	0
-```
-Reboot the machine:
-```console
-sudo reboot
-```
-
-### Install Fail2Ban
-```console
-sudo apt-get install fail2ban -y
-sudo nano /etc/fail2ban/jail.local
-```
-Add the following to `jail.local`:
-```properties
-[sshd]
-enabled = true
-port = 22
-filter = sshd
-logpath = /var/log/auth.log
-maxretry = 3
-ignoreip = 127.0.0.0/8 10.0.0.0/8 192.168.0.0/16
-```
-```console
-sudo systemctl restart fail2ban
 ```
 
 ### Set up the Firewall
@@ -180,6 +121,7 @@ Status: active
 [15] 9090/tcp (v6)              ALLOW IN    Anywhere (v6)              # prometheus
 [16] 5051 (v6)                  ALLOW IN    Anywhere (v6)              # teku-rest-api
 ```
+
 ### Fix SSD Storage
 Check current configuration:
 ```console
@@ -189,15 +131,77 @@ sudo lvdisplay #
 Change configuration:
 ```console
 sudo lvm
-> lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
-> lvextend -l +100%FREE -r /dev/ubuntu-vg/ubuntu-lv
-> exit
+lvm> lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+lvm> lvextend -l +100%FREE -r /dev/ubuntu-vg/ubuntu-lv
+lvm> exit
 sudo resize2fs /dev/ubuntu-vg/ubuntu-lv
 ```
 Check new configuration:
 ```console
 df -h #
 sudo lvdisplay #
+```
+
+### Install apcupsd (optional for UPS backups - requires USB cable):
+```console
+sudo apt-get install apcupsd
+```
+Edit the name and device in `apcupsd.conf` configuration:
+```console
+sudo nano /etc/apcupsd/apcupsd.conf
+```
+Reboot the machine:
+```console
+sudo reboot
+```
+
+### SSH Lockdown
+```console
+sudo nano /etc/ssh/sshd_config
+```
+Edit `sshd_config`:
+
+```properties
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+PermitRootLogin prohibit-password
+PermitEmptyPasswords no
+```
+Confirm `sshd`'s configuration is error-free:
+```console
+sudo sshd -t
+```
+
+### Secure Shared Memory
+```console
+sudo nano /etc/fstab
+```
+Add the following line to `fstab`:
+```properties
+tmpfs	/run/shm	tmpfs	ro,noexec,nosuid	0	0
+```
+Reboot the machine:
+```console
+sudo reboot
+```
+
+### Install Fail2Ban
+```console
+sudo apt-get install fail2ban -y
+sudo nano /etc/fail2ban/jail.local
+```
+Add the following to `jail.local`:
+```properties
+[sshd]
+enabled = true
+port = 22
+filter = sshd
+logpath = /var/log/auth.log
+maxretry = 3
+ignoreip = 127.0.0.0/8 10.0.0.0/8 192.168.0.0/16
+```
+```console
+sudo systemctl restart fail2ban
 ```
 
 ### Install SSH 2FA (optional)
