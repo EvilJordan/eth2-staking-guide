@@ -167,7 +167,7 @@ PasswordAuthentication no
 PermitRootLogin prohibit-password
 PermitEmptyPasswords no
 ```
-Confirm `sshd`'s configuration is error-free:
+Confirm `sshd`'s configuration is error-free (there should be no output from this command):
 ```console
 sudo sshd -t
 ```
@@ -236,7 +236,11 @@ UsePAM yes
 ```
 Add the following to the `sshd_config` file:
 ```properties
-AuthenticationMethods publickey,password publickey,keyboard-interactive
+AuthenticationMethods publickey,keyboard-interactive
+```
+Confirm `sshd`'s configuration is error-free (there should be no output from this command):
+```console
+sudo sshd -t
 ```
 Set up 2FA:
 ```console
