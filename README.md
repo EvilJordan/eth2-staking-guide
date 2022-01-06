@@ -609,6 +609,9 @@ sudo ./gradlew installDist
 cd ~
 sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
 sudo useradd --no-create-home --shell /bin/false teku
+sudo mkdir -p /var/lib/teku
+sudo mkdir -p /etc/teku
+sudo chown $(whoami):$(whoami) /var/lib/teku
 ```
 #### Generate and Handle Validator Keys - External to this guide
 
@@ -616,8 +619,13 @@ sudo useradd --no-create-home --shell /bin/false teku
 2. Create password files for validator keys:
 	- Copy every `keystore-m*.json` file and rename the copies to have `.txt` as the file extension
 	- Open each file and replace all contents with the keystore password created in Step 1.
-3. Move generated validator keys and password files to ` /var/lib/teku/validator_keys`
-	- Use an SFTP program or a USB key to move files to the machine, then folder
+3. Use an SFTP program or a USB key to move files to the NUC in your home folder
+
+Move validator keys from your home folder to Teku:
+```console
+sudo cp -r $HOME/validator_keys /var/lib/teku
+sudo rm /var/lib/teku/validator_keys/deposit_data*
+```
 
 Set permissions for keys:
 ```console
