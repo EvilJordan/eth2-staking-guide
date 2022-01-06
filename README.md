@@ -296,7 +296,7 @@ sudo nano /etc/prometheus/prometheus.yml
 ```
 Make sure the `prometheus.yml` file includes the below configuration. Pay special attention to spacing. Two _spaces_ are required for each indentation.
 
-Optionally, change `scrape_interval: 3s` and `scape_timeout: 2s` for faster metrics updating at the expense of CPU load.
+Optionally, change `scrape_interval: 5s` and `scape_timeout: 3s` for faster metrics updating at the expense of CPU load.
 ```yaml
 global:
   scrape_interval: 15s
@@ -495,8 +495,9 @@ sudo systemctl restart grafana-server
 ### Install GETH
 ```console
 sudo add-apt-repository -y ppa:ethereum/ethereum
-sudo apt update
-sudo apt install geth
+sudo apt-get update -y
+sudo apt dist-upgrade -y
+sudo apt install geth -y
 ```
 Set permissions for geth:
 ```console
@@ -528,6 +529,7 @@ Reload geth:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start geth
+sudo systemctl status geth
 sudo systemctl enable geth
 ```
 Wait for Geth to sync and monitor with:
