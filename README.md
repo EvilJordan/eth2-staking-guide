@@ -263,7 +263,7 @@ exit
 ```
 Log back in to server via SSH to see 2FA in action.
 
-## Install Prometheus/Grafana/Eth1/Teku
+## Install Prometheus/Grafana/ETH1 (Geth)/Teku
 ### Install Prometheus
 Determine the latest release version by visiting: https://github.com/prometheus/prometheus/releases
 
@@ -517,7 +517,7 @@ sudo systemctl restart grafana-server
 16. Repeat steps 12-15 for the execution client dashboard.
 17. Repeat steps 12-15 for the node-exporter dashboard.
 
-### Install GETH
+### Install Geth
 ```console
 sudo add-apt-repository -y ppa:ethereum/ethereum
 sudo apt-get update -y
@@ -546,7 +546,7 @@ Group=goeth
 Type=simple
 Restart=always
 RestartSec=5
-ExecStart=geth --goerli --http --datadir /var/lib/goethereum
+ExecStart=geth --goerli --http --datadir /var/lib/goethereum --metrics --pprof
 [Install]
 WantedBy=default.target
 ```
