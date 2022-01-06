@@ -3,6 +3,7 @@
 This guide is built with a combination of information from:
 - https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater
 - https://www.coincashew.com/coins/overview-eth/guide-or-security-best-practices-for-a-eth2-validator-beaconchain-node
+- https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-mainnet/monitoring-your-validator-with-grafana-and-prometheus
 - https://someresat.medium.com/guide-to-staking-on-ethereum-2-0-ubuntu-prater-teku-3249f1922385
 - https://docs.teku.consensys.net/en/stable/
 - https://ethereum.org/en/eth2/staking/
