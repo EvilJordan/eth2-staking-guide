@@ -316,19 +316,19 @@ scrape_configs:
   - job_name: json_exporter
     static_configs:
     - targets:
-    - 127.0.0.1:7979
+      - 127.0.0.1:7979
   - job_name: json
     metrics_path: /probe
     static_configs:
     - targets:
-    - https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+      - https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
     relabel_configs:
     - source_labels: [__address__]
-    target_label: __param_target
+      target_label: __param_target
     - source_labels: [__param_target]
-    target_label: instance
+      target_label: instance
     - target_label: __address__
-    replacement: 127.0.0.1:7979
+      replacement: 127.0.0.1:7979
 ```
 Change permissions on the `prometheus.yml` file:
 ```console
@@ -420,6 +420,8 @@ git clone https://github.com/prometheus-community/json_exporter.git
 cd json_exporter
 make build
 sudo cp json_exporter /usr/local/bin/
+cd ~
+rm -rf json_exporter
 sudo chown json_exporter:json_exporter /usr/local/bin/json_exporter
 ```
 #### Configure json_exporter
@@ -468,6 +470,7 @@ Reload the systemd service file configurations, start node_exporter, then enable
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start json_exporter.service
+sudo systemctl status json_exporter.service
 sudo systemctl enable json_exporter.service
 ```
 
