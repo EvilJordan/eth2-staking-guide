@@ -369,7 +369,13 @@ Reload prometheus:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start prometheus
+```
+Check the status. There should be a green `active` in the output:
+```console
 sudo systemctl status prometheus
+```
+Enable the service:
+```console
 sudo systemctl enable prometheus
 ```
 ### Install Node Exporter
@@ -406,7 +412,13 @@ Reload node exporter:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start node_exporter
+```
+Check the status. There should be a green `active` in the output:
+```console
 sudo systemctl status node_exporter
+```
+Enable the service:
+```
 sudo systemctl enable node_exporter
 ```
 
@@ -477,7 +489,13 @@ Reload the systemd service file configurations, start node_exporter, then enable
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start json_exporter.service
+```
+Check the status. There should be a green `active` in the output:
+```console
 sudo systemctl status json_exporter.service
+```
+Enable the service:
+```console
 sudo systemctl enable json_exporter.service
 ```
 
@@ -488,7 +506,13 @@ sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
 sudo apt update
 sudo apt install grafana
 sudo systemctl start grafana-server
+```
+Check the status. There should be a green `active` in the output:
+```console
 sudo systemctl status grafana-server
+```
+Enable the service:
+```console
 sudo systemctl enable grafana-server
 ```
 
@@ -555,7 +579,13 @@ Reload geth:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start geth
+```
+Check the status. There should be a green `active` in the output:
+```console
 sudo systemctl status geth
+```
+Enable the service:
+```console
 sudo systemctl enable geth
 ```
 Wait for Geth to sync and monitor with:
@@ -649,7 +679,13 @@ Restart Teku:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start teku
+```
+Check the status. There should be a green `active` in the output:
+```console
 sudo systemctl status teku
+```
+Enable the service:
+```console
 sudo systemctl enable teku
 ```
 Monitor Beacon Chain syncing progress, peers, and other information:
