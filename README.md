@@ -149,8 +149,7 @@ sudo lvdisplay #
 ```
 
 ### Install apcupsd (optional for UPS backups - requires USB cable)
-If you do not have a UPS skip this step.
-
+If you do not have a UPS skip this step.  
 If your UPS does not have a USB connection to allow it to be plugged into the staking machine, skip this step.
 ```console
 sudo apt-get install apcupsd
