@@ -720,3 +720,13 @@ This is an external process describe in various referenced guides. Please follow
 Watch [prater.beachoncha.in](https://prater.beachoncha.in) and wait for deposits to clear.
 
 ### You’re done! 🎉
+
+## Maintenance
+The staking machine requires regular _manual_ maintanence.
+
+### Geth Pruning
+https://gist.github.com/yorickdowne/3323759b4cbf2022e191ab058a4276b2
+
+### Geth Updates
+### Teku Updates
+### System Updates
