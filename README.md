@@ -34,7 +34,7 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
 ## Set up Staking Machine
 
 ### SSH into server and install lolcat (optional)
-This is personal thing, – no one else needs this.
+***This is personal thing, – no one else needs this.***
 ```console
 git clone https://github.com/jaseg/lolcat.git
 cd lolcat
@@ -44,7 +44,7 @@ make
 sudo make install
 rm -rf lolcat
 ```
-SFTP into server and replace bash files and authorized_keys (optional)
+### SFTP into server and replace bash files and authorized_keys
 
 ### Update server
 ```console
