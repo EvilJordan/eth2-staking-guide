@@ -17,7 +17,12 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
 ## Prerequisites
 - Set BIOS to power-on on power restore (hold `F2` during power-on to enter the BIOS)
 - Install Ubuntu from USB: https://ubuntu.com/download/server
+  - You probably want Option 2, Manual Installation
+  - Prepare a bootable USB on [Windows](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows) or [Mac](https://ubuntu.com/tutorials/create-a-usb-stick-on-macos)
 - SFTP and SSH clients for remote administration
+  - Windows: [WinSCP](https://winscp.net/eng/index.php) or [CyberDuck](https://cyberduck.io/download/) and [puTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+    - For puTTY, you probably want the "MSI (‘Windows Installer’)" version, in 64-bit x86. Probably.
+  - Mac: [Cyberduck](https://cyberduck.io/download/) and the built-in [Console](https://support.apple.com/guide/console/welcome/mac)
 - Additional USB to transfer files from key-generating machine to staking machine if not using local network
 - [Goerli Testnet ETH](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#1.-obtain-testnet-eth)
 - [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
