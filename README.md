@@ -15,7 +15,7 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
 ---
 
 ## Prerequisites
-- Set BIOS to power-on on power restore (hold `F2` during power-on to enter the BIOS)
+- [Set BIOS to power-on on power restore](https://www.intel.com/content/www/us/en/support/articles/000054773/intel-nuc/intel-nuc-mini-pcs.html)
 - Install Ubuntu from USB: https://ubuntu.com/download/server
   - You probably want Option 2, Manual Installation
   - Prepare a bootable USB on [Windows](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows) or [Mac](https://ubuntu.com/tutorials/create-a-usb-stick-on-macos)
