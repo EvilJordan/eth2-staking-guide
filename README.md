@@ -142,6 +142,13 @@ Check new configuration:
 df -h #
 sudo lvdisplay #
 ```
+### Nano
+`nano`, a command you will see referenced from here on out, is a text editor. Here are some basics you will need to know:
+- The bottom bar once you launch nano shows possible commands, based on context. The carrot symbol (`^`) means the "Control" key on your keyboard. So, `^X` means press the `Control` key _and_ the `x` key at the same time to exit.
+- To save a file, or as nano calls it, "Write Out", `^O` (Control + O).
+- Navigation is accomplished with the arrow keys, or `^Y` for page-up, `^V` for page-down.
+- To search, press `^W` ("Where Is"), then type in your search and hit Enter.
+- To exit nano, `^X`. If changes have been made, but not yet saved, nano will prompt to confirm changes, or if you want to discard or cancel the exit operation altogether.
 
 ### Install apcupsd (optional for UPS backups - requires USB cable)
 If you do not have a UPS skip this step.  
