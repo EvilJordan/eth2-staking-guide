@@ -730,5 +730,26 @@ The staking machine requires regular _manual_ maintanence.
 https://gist.github.com/yorickdowne/3323759b4cbf2022e191ab058a4276b2
 
 ### Geth Updates
+
 ### Teku Updates
+#### Review release notes and check for breaking changes/features.
+https://github.com/ConsenSys/teku/releases  
+Pull the latest source and build it.
+```console
+cd ~/teku
+git pull
+./gradlew distTar installDist
+```
+Verify the build completed by checking the new version number.
+```console
+cd ~/teku/build/install/teku/bin
+./teku --version
+```
+Restart beacon chain and validator as per normal operating procedures.
+```console
+cd ~
+sudo systemctl stop teku
+sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
+sudo systemctl start teku
+```
 ### System Updates
