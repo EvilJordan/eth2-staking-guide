@@ -746,7 +746,7 @@ cd ~/teku/build/install/teku/bin
 ./teku --version
 ```
 Restart beacon chain and validator as per normal operating procedures.  
-**Make sure the validators are in an acceptable state to be stopped before proceeding**
+**Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
 ```console
 cd ~
 sudo systemctl stop teku
@@ -761,4 +761,4 @@ sudo apt-get autoremove
 sudo apt-get autoclean
 ```
 
-[^status]: test
+[^status]: Status script information here
