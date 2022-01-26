@@ -756,9 +756,10 @@ sudo systemctl start teku
 ### System Updates
 **Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
 ```console
-sudo apt-get update -y && sudo apt dist-upgrade -y
-sudo apt-get autoremove
-sudo apt-get autoclean
+sudo apt update -y && sudo apt upgrade -y
+sudo apt autoremove
+sudo apt autoclean
 ```
+A reboot may be necessary: `sudo reboot`
 
 [^status]: Status script information here
