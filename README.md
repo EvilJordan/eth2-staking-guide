@@ -762,4 +762,4 @@ sudo apt autoclean
 ```
 A reboot may be necessary: `sudo reboot`
 
-[^status]: Status script information here
+[^status]: Install [ethdo](https://github.com/wealdtech/ethdo) and then use the [status script]() to make sure timing is ok for a restart or update.
