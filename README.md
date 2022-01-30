@@ -20,12 +20,12 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
   - You probably want Option 2, Manual Installation
   - Prepare a bootable USB on [Windows](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows) or [Mac](https://ubuntu.com/tutorials/create-a-usb-stick-on-macos)
 - SFTP and SSH clients for remote administration
-  - Windows: [WinSCP](https://winscp.net/eng/index.php) or [CyberDuck](https://cyberduck.io/download/) and [puTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+  - Windows: [CyberDuck](https://cyberduck.io/download/) and [puTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
     - For puTTY, you probably want the "MSI (‘Windows Installer’)" version, in 64-bit x86. Probably.
   - Mac: [Cyberduck](https://cyberduck.io/download/) and the built-in [Console](https://support.apple.com/guide/console/welcome/mac)
 - Additional USB to transfer files from key-generating machine to staking machine if not using local network
 - [Goerli Testnet ETH](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#1.-obtain-testnet-eth)
-- [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
+- [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2 OR you can skip all the hard stuff and use the [Wagyu](https://wagyu.gg/) GUI. No matter what process you pick, please generate these validator keys on a secure machine.
 
 ## Set up Router
 - Assign a static IP to your staking machine.
@@ -624,7 +624,7 @@ sudo chown $(whoami):$(whoami) /var/lib/teku
 ```
 #### Generate and Handle Validator Keys - External to this guide
 
-1. [Generate Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
+1. [Generate Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2 OR you can skip all the hard stuff and use the [Wagyu](https://wagyu.gg/) GUI. No matter what process you pick, please generate these validator keys on a secure machine.
 2. Create password files for validator keys:
 	- Copy every `keystore-m*.json` file and rename the copies to have `.txt` as the file extension
 	- Open each file and replace all contents with the keystore password created in Step 1.
