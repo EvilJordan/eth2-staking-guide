@@ -42,6 +42,7 @@ sudo apt install make
 sudo apt install gcc
 make
 sudo make install
+cd ..
 rm -rf lolcat
 ```
 ### SFTP into server and replace bash files and authorized_keys
