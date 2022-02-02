@@ -428,15 +428,21 @@ Check the status. There should be a green `active` in the output:
 sudo systemctl status node_exporter
 ```
 Enable the service:
-```
+```console
 sudo systemctl enable node_exporter
 ```
 
 ### Install json_exporter
 #### Install go:
+Visit https://go.dev/dl/ to grab the latest version of go. As of this writing, that version is 1.17.6:
 ```console
-sudo apt-get install golang-1.14-go
-sudo ln -s /usr/lib/go-1.14/bin/go /usr/bin/go
+cd ~
+curl -OL https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
+```
+Extract and install go:
+```console
+sudo tar -C /usr/local -xvf go1.17.6.linux-amd64.tar.gz
+sudo ln -s /usr/local/go/bin/go /usr/bin/go
 ```
 #### Create User Account
 ```console
