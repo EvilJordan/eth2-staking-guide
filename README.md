@@ -737,6 +737,25 @@ The staking machine requires regular _manual_ maintanence.
 https://gist.github.com/yorickdowne/3323759b4cbf2022e191ab058a4276b2
 
 ### Geth Updates
+https://github.com/ethereum/go-ethereum/releases 
+Just in case, update the installed geth package to make sure it sees the latest stable version:
+```console
+sudo apt update
+```
+Now, update geth!
+```console
+sudo apt upgrade -y
+sudo apt autoremove
+sudo apt autoclean
+```
+Restart geth:
+```console
+sudo systemctl restart geth
+```
+Make sure geth is ok (should see a green "active" message):
+```console
+sudo systemctl status geth
+```
 
 ### Teku Updates
 #### Review release notes and check for breaking changes/features.
