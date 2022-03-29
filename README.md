@@ -668,11 +668,15 @@ eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
 initial-state: "https://XXX:XXX@eth2-beacon-prater.infura.io/eth/v1/debug/beacon/states/finalized"
 validator-keys: "/var/lib/teku/validator_keys:/var/lib/teku/validator_keys"
 validators-graffiti: "XXX"
+# optionally use a file for graffiti, but make sure it is world-readable
+# validators-graffiti-file: "/home/USERDIR/graffiti.txt"
 p2p-port: 9000
 p2p-peer-upper-bound: 100
 log-destination: "CONSOLE"
 metrics-enabled: true
 metrics-port: 8008
+# if you are using beaconcha.in to monitor your machine, include the appropriate URL below
+metrics-publish-endpoint: "https://beaconcha.in/api/v1/client/metrics?apikey=APIKEY&machine=MACHINENAME"
 # replace hostname with the name of your staking machine
 rest-api-host-allowlist: ["localhost", "127.0.0.1", "hostname"]
 rest-api-enabled: true
