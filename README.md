@@ -667,6 +667,8 @@ eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
 # if quick-sync is desired, replace the state URL with your information from Infura
 initial-state: "https://XXX:XXX@eth2-beacon-prater.infura.io/eth/v1/debug/beacon/states/finalized"
 validator-keys: "/var/lib/teku/validator_keys:/var/lib/teku/validator_keys"
+# change this to your Ethereum withdrawal address (or any other address you'd like proposal fees to go
+validators-proposer-default-fee-recipient: "0x..."
 validators-graffiti: "XXX"
 # optionally use a file for graffiti, but make sure it is world-readable
 # validators-graffiti-file: "/home/USERDIR/graffiti.txt"
