@@ -21,12 +21,12 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
   - You probably want Option 2, Manual Installation
   - Prepare a bootable USB on [Windows](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows) or [Mac](https://ubuntu.com/tutorials/create-a-usb-stick-on-macos)
 - SFTP and SSH clients for remote administration
-  - Windows: [WinSCP](https://winscp.net/eng/index.php) or [CyberDuck](https://cyberduck.io/download/) and [puTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+  - Windows: [CyberDuck](https://cyberduck.io/download/) and [puTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
     - For puTTY, you probably want the "MSI (‘Windows Installer’)" version, in 64-bit x86. Probably.
   - Mac: [Cyberduck](https://cyberduck.io/download/) and the built-in [Console](https://support.apple.com/guide/console/welcome/mac)
 - Additional USB to transfer files from key-generating machine to staking machine if not using local network
 - [Goerli Testnet ETH](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#1.-obtain-testnet-eth)
-- [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
+- [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2 OR you can skip all the hard stuff and use the [Wagyu](https://wagyu.gg/) GUI. No matter what process you pick, please generate these validator keys on a secure machine.
 
 ## Set up Router
 - Assign a static IP to your staking machine.
@@ -43,6 +43,7 @@ sudo apt install make
 sudo apt install gcc
 make
 sudo make install
+cd ..
 rm -rf lolcat
 ```
 ### SFTP into server and replace bash files and authorized_keys
@@ -428,15 +429,21 @@ Check the status. There should be a green `active` in the output:
 sudo systemctl status node_exporter
 ```
 Enable the service:
-```
+```console
 sudo systemctl enable node_exporter
 ```
 
 ### Install json_exporter
 #### Install go:
+Visit https://go.dev/dl/ to grab the latest version of go. As of this writing, that version is 1.17.6:
 ```console
-sudo apt-get install golang-1.14-go
-sudo ln -s /usr/lib/go-1.14/bin/go /usr/bin/go
+cd ~
+curl -OL https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
+```
+Extract and install go:
+```console
+sudo tar -C /usr/local -xvf go1.17.6.linux-amd64.tar.gz
+sudo ln -s /usr/local/go/bin/go /usr/bin/go
 ```
 #### Create User Account
 ```console
@@ -625,7 +632,7 @@ sudo chown $(whoami):$(whoami) /var/lib/teku
 ```
 #### Generate and Handle Validator Keys - External to this guide
 
-1. [Generate Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2
+1. [Generate Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2 OR you can skip all the hard stuff and use the [Wagyu](https://wagyu.gg/) GUI. No matter what process you pick, please generate these validator keys on a secure machine.
 2. Create password files for validator keys:
 	- Copy every `keystore-m*.json` file and rename the copies to have `.txt` as the file extension
 	- Open each file and replace all contents with the keystore password created in Step 1.
@@ -661,12 +668,18 @@ eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
 # if quick-sync is desired, replace the state URL with your information from Infura
 initial-state: "https://XXX:XXX@eth2-beacon-prater.infura.io/eth/v1/debug/beacon/states/finalized"
 validator-keys: "/var/lib/teku/validator_keys:/var/lib/teku/validator_keys"
+# change this to your Ethereum withdrawal address (or any other address you'd like proposal fees to go
+validators-proposer-default-fee-recipient: "0x..."
 validators-graffiti: "XXX"
+# optionally use a file for graffiti, but make sure it is world-readable
+# validators-graffiti-file: "/home/USERDIR/graffiti.txt"
 p2p-port: 9000
 p2p-peer-upper-bound: 100
 log-destination: "CONSOLE"
 metrics-enabled: true
 metrics-port: 8008
+# if you are using beaconcha.in to monitor your machine, include the appropriate URL below
+metrics-publish-endpoint: "https://beaconcha.in/api/v1/client/metrics?apikey=APIKEY&machine=MACHINENAME"
 # replace hostname with the name of your staking machine
 rest-api-host-allowlist: ["localhost", "127.0.0.1", "hostname"]
 rest-api-enabled: true
@@ -731,6 +744,25 @@ The staking machine requires regular _manual_ maintanence.
 https://gist.github.com/yorickdowne/3323759b4cbf2022e191ab058a4276b2
 
 ### Geth Updates
+https://github.com/ethereum/go-ethereum/releases  
+Just in case, update the installed geth package to make sure it sees the latest stable version:
+```console
+sudo apt update
+```
+Now, update geth!
+```console
+sudo apt upgrade -y
+sudo apt autoremove
+sudo apt autoclean
+```
+Restart geth:
+```console
+sudo systemctl restart geth
+```
+Make sure geth is ok (should see a green "active" message):
+```console
+sudo systemctl status geth
+```
 
 ### Teku Updates
 #### Review release notes and check for breaking changes/features.
