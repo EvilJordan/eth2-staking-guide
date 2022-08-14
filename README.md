@@ -16,6 +16,7 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
 
 ## Prerequisites
 - [Set BIOS to power-on on power restore](https://www.intel.com/content/www/us/en/support/articles/000054773/intel-nuc/intel-nuc-mini-pcs.html)
+- Disable Intel&reg; TurboBoost[^turboboost] in BIOS (Performance -> Power Settings)
 - Install Ubuntu from USB: https://ubuntu.com/download/server
   - You probably want Option 2, Manual Installation
   - Prepare a bootable USB on [Windows](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows) or [Mac](https://ubuntu.com/tutorials/create-a-usb-stick-on-macos)
@@ -761,5 +762,7 @@ sudo apt autoremove
 sudo apt autoclean
 ```
 A reboot may be necessary: `sudo reboot`
+
+[^turboboost]: TurboBoost seems unnecessary and will make your NUC run hot and loud.
 
 [^status]: Install [ethdo](https://github.com/wealdtech/ethdo) and then use the [status script](https://github.com/EvilJordan/eth2-staking-guide/blob/main/status.sh) to make sure timing is ok for a restart or update.
