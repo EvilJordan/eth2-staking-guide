@@ -658,8 +658,8 @@ Add the following to the `besu.service` definition:
 ```properties
 [Unit]
 Description=Besu Ethereum Client
-After=network-online.target
-Wants=network-online.target
+After=network.target
+Wants=network.target
 
 [Service]
 User=besu
@@ -679,7 +679,7 @@ ExecStart=/usr/local/bin/besu/bin/besu \
     --engine-jwt-secret=/var/lib/ethereum/jwttoken
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 ```
 Re/Start Besu:
 ```console
