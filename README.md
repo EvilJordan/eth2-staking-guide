@@ -275,7 +275,13 @@ exit
 ```
 Log back in to server via SSH to see 2FA in action.
 
-## Install Prometheus/Grafana/ETH1 (Geth)/Teku
+### Install Java
+Since we are running Teku (and possibly Besu) we need to install Java:
+```console
+sudo apt install default-jre default-jdk
+```
+
+## Install Prometheus/Grafana
 ### Install Prometheus
 Determine the latest release version by visiting: https://github.com/prometheus/prometheus/releases
 
@@ -559,6 +565,16 @@ sudo systemctl restart grafana-server
 16. Repeat steps 12-15 for the execution client dashboard.
 17. Repeat steps 12-15 for the node-exporter dashboard.
 
+## Install the Consensus (Teku) and Execution (Geth or Besu) Layers
+### Generate a JWT
+```console
+sudo mkdir -p /var/lib/ethereum
+openssl rand -hex 32 | tr -d "\n" | sudo tee /var/lib/ethereum/jwttoken
+sudo chmod +r /var/lib/ethereum/jwttoken
+```
+> **Warning**
+> Only install Geth _or_ Besu. Not both.
+
 ### Install Geth
 ```console
 sudo add-apt-repository -y ppa:ethereum/ethereum
@@ -582,6 +598,7 @@ Add the following to the `geth.service` file:
 Description=Ethereum go client
 After=network.target 
 Wants=network.target
+
 [Service]
 User=goeth 
 Group=goeth
@@ -589,6 +606,7 @@ Type=simple
 Restart=always
 RestartSec=5
 ExecStart=geth --goerli --http --datadir /var/lib/goethereum --metrics --pprof
+
 [Install]
 WantedBy=default.target
 ```
@@ -616,9 +634,69 @@ geth attach http://127.0.0.1:8545
 > eth.syncing
 ```
 
+### Install Besu
+Download the [latest](https://github.com/hyperledger/besu/releases) version of Besu and extract:
+```console
+cd ~
+wget https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/22.7.0/besu-22.7.0.tar.gz
+tar xvf besu-22.7.0.tar.gz
+rm besu-22.7.0.tar.gz
+sudo cp -a ./besu-22.7.0 /usr/local/bin/besu
+rm -rf ./besu-22.7.0
+```
+Create a user for besu:
+```console
+sudo useradd --no-create-home --shell /bin/false besu
+sudo mkdir -p /var/lib/besu
+sudo chown -R besu:besu /var/lib/besu
+```
+Create the Besu configuration:
+```
+sudo nano /etc/systemd/system/besu.service
+```
+Add the following to the `besu.service` definition:
+```properties
+[Unit]
+Description=Besu Ethereum Client
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=besu
+Group=besu
+Type=simple
+Restart=always
+RestartSec=5
+ExecStart=/usr/local/bin/besu/bin/besu \
+    --network=goerli \
+    --sync-mode=X_CHECKPOINT \
+    --rpc-http-enabled=true \
+    --engine-rpc-port=8551 \
+    --engine-host-allowlist=localhost,127.0.0.1 \
+    --data-path=/var/lib/besu \
+    --data-storage-format=BONSAI \
+    --metrics-enabled=true \
+    --engine-jwt-secret=/var/lib/ethereum/jwttoken
+
+[Install]
+WantedBy=multi-user.target
+```
+Re/Start Besu:
+```console
+sudo systemctl daemon-reload
+sudo systemctl start besu.service
+```
+Check the status. There should be a green `active` in the output:
+```console
+sudo systemctl status besu.service
+```
+Enable the service:
+```console
+sudo systemctl enable besu.service
+```
+
 ### Install Teku
 ```console
-sudo apt install default-jre default-jdk
 cd ~
 git clone https://github.com/Consensys/teku.git
 cd teku
@@ -684,6 +762,7 @@ metrics-publish-endpoint: "https://beaconcha.in/api/v1/client/metrics?apikey=API
 rest-api-host-allowlist: ["localhost", "127.0.0.1", "hostname"]
 rest-api-enabled: true
 rest-api-docs-enabled: true
+ee-jwt-secret-file: "/var/lib/ethereum/jwttoken"
 ```
 Create the Teku service definition:
 ```console
@@ -695,6 +774,7 @@ Add the following to `teku.service`:
 Description=Teku Client
 Wants=network-online.target
 After=network-online.target
+
 [Service]
 Type=simple
 User=teku
@@ -703,10 +783,11 @@ Restart=always
 RestartSec=5
 Environment="JAVA_OPTS=-Xmx5g"
 ExecStart=/usr/local/bin/teku/bin/teku --config-file=/etc/teku/teku.yaml
+
 [Install]
 WantedBy=multi-user.target
 ```
-Restart Teku:
+Re/Start Teku:
 ```console
 sudo systemctl daemon-reload
 sudo systemctl start teku
