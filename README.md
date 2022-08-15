@@ -626,7 +626,7 @@ sudo systemctl enable geth
 Wait for Geth to sync and monitor with:
 
 ```console
-sudo journalctl -fu geth.service
+sudo journalctl -fu geth.service -o cat
 ```
 Monitoring of the sync process **which must be complete before proceeding** can also be performed with the following commmands and looking for a return value of `false`. Anything else means syncing is still in progress
 ```console
@@ -693,6 +693,10 @@ sudo systemctl status besu.service
 Enable the service:
 ```console
 sudo systemctl enable besu.service
+```
+Monitor Beacon Chain syncing progress, peers, and other information:
+```console
+sudo journalctl -fu besu.service -o cat
 ```
 
 ### Install Teku
@@ -802,7 +806,7 @@ sudo systemctl enable teku
 ```
 Monitor Beacon Chain syncing progress, peers, and other information:
 ```console
-sudo journalctl -fu teku.service
+sudo journalctl -fu teku.service -o cat
 ```
 **Teku needs to sync to the Beacon Chain before proceeding with the funding of validators.**
 
