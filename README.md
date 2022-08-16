@@ -880,6 +880,8 @@ sudo systemctl stop teku
 sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
 sudo systemctl start teku
 ```
+### Besu Updates
+### Placeholder for now
 ### System Updates
 **Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
 ```console
