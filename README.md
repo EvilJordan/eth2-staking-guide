@@ -315,6 +315,8 @@ sudo nano /etc/prometheus/prometheus.yml
 Make sure the `prometheus.yml` file includes the below configuration. Pay special attention to spacing. Two _spaces_ are required for each indentation.
 
 Optionally, change `scrape_interval: 5s` and `scape_timeout: 3s` for faster metrics updating at the expense of CPU load.
+
+Also note, you probably aren't running `geth` _and_ `besu`. Both configurations are included here as an example, however.
 ```yaml
 global:
   scrape_interval: 15s
@@ -325,23 +327,30 @@ scrape_configs:
   - job_name: "node_exporter"
     static_configs:
     - targets: ["localhost:9100"]
-  - job_name: 'geth'
+  - job_name: "geth"
     scrape_timeout: 10s
     metrics_path: /debug/metrics/prometheus
     scheme: http
     static_configs:
     - targets: ['localhost:6060']
+  - job_name: "besu"
+    scrape_timeout: 3s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+    - targets:
+      - localhost:9545
   - job_name: "teku"
     scrape_timeout: 10s
     metrics_path: /metrics
     scheme: http
     static_configs:
     - targets: ["localhost:8008"]
-  - job_name: json_exporter
+  - job_name: "json_exporter"
     static_configs:
     - targets:
       - 127.0.0.1:7979
-  - job_name: json
+  - job_name: "json"
     metrics_path: /probe
     static_configs:
     - targets:
