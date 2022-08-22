@@ -235,7 +235,7 @@ Find and comment out the below line by adding # in front of it:
 ```
 Restart the `sshd` service:
 ```console
-sudo systemctl restart sshd.service
+sudo systemctl restart sshd
 ```
 Edit the `sshd_config` file:
 ```console
@@ -267,7 +267,7 @@ Answers to `google-authenticator` setup:
 
 Restart the `sshd` service:
 ```console
-sudo systemctl restart sshd.service
+sudo systemctl restart sshd
 ```
 Log out of the server:
 ```console
@@ -520,15 +520,15 @@ Reload the systemd service file configurations, start node_exporter, then enable
 
 ```console
 sudo systemctl daemon-reload
-sudo systemctl start json_exporter.service
+sudo systemctl start json_exporter
 ```
 Check the status. There should be a green `active` in the output:
 ```console
-sudo systemctl status json_exporter.service
+sudo systemctl status json_exporter
 ```
 Enable the service:
 ```console
-sudo systemctl enable json_exporter.service
+sudo systemctl enable json_exporter
 ```
 
 ### Install Grafana:
@@ -635,7 +635,7 @@ sudo systemctl enable geth
 Wait for Geth to sync and monitor with:
 
 ```console
-sudo journalctl -fu geth.service -o cat
+sudo journalctl -fu geth -o cat
 ```
 Monitoring of the sync process **which must be complete before proceeding** can also be performed with the following commmands and looking for a return value of `false`. Anything else means syncing is still in progress
 ```console
@@ -650,7 +650,7 @@ cd ~
 wget https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/22.7.0/besu-22.7.0.tar.gz
 tar xvf besu-22.7.0.tar.gz
 rm besu-22.7.0.tar.gz
-sudo cp -a ./besu-22.7.0 /usr/local/bin/besu
+sudo cp -a besu-22.7.0/. /usr/local/bin/besu
 rm -rf ./besu-22.7.0
 ```
 Create a user for besu:
@@ -679,6 +679,7 @@ RestartSec=5
 ExecStart=/usr/local/bin/besu/bin/besu \
     --network=goerli \
     --sync-mode=X_CHECKPOINT \
+    --rpc-ws-enabled=true \
     --rpc-http-enabled=true \
     --engine-rpc-port=8551 \
     --engine-host-allowlist=localhost,127.0.0.1 \
@@ -693,19 +694,19 @@ WantedBy=default.target
 Re/Start Besu:
 ```console
 sudo systemctl daemon-reload
-sudo systemctl start besu.service
+sudo systemctl start besu
 ```
 Check the status. There should be a green `active` in the output:
 ```console
-sudo systemctl status besu.service
+sudo systemctl status besu
 ```
 Enable the service:
 ```console
-sudo systemctl enable besu.service
+sudo systemctl enable besu
 ```
 Monitor Beacon Chain syncing progress, peers, and other information:
 ```console
-sudo journalctl -fu besu.service -o cat
+sudo journalctl -fu besu -o cat
 ```
 
 ### Install Teku
@@ -775,6 +776,8 @@ metrics-publish-endpoint: "https://beaconcha.in/api/v1/client/metrics?apikey=API
 rest-api-host-allowlist: ["localhost", "127.0.0.1", "hostname"]
 rest-api-enabled: true
 rest-api-docs-enabled: true
+# we're testing or post-merge, so the following two lines are required. Be sure to comment out/remove the eth1-endpoint line above
+ee-endpoint: "http://localhost:8551"
 ee-jwt-secret-file: "/var/lib/ethereum/jwttoken"
 ```
 Create the Teku service definition:
@@ -815,7 +818,7 @@ sudo systemctl enable teku
 ```
 Monitor Beacon Chain syncing progress, peers, and other information:
 ```console
-sudo journalctl -fu teku.service -o cat
+sudo journalctl -fu teku -o cat
 ```
 **Teku needs to sync to the Beacon Chain before proceeding with the funding of validators.**
 
@@ -881,7 +884,8 @@ sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
 sudo systemctl start teku
 ```
 ### Besu Updates
-Download the latest release from https://github.com/hyperledger/besu/releases:
+Download the latest release from https://github.com/hyperledger/besu/releases  
+Change any URL or filename below with the appropriate release number
 ```console
 cd ~
 wget https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/22.7.1/besu-22.7.1.tar.gz
@@ -896,7 +900,7 @@ sudo systemctl stop besu
 ```
 Copy the new release to the appropriate location:
 ```console
-sudo cp -a ./besu-22.7.0 /usr/local/bin/besu
+sudo cp -a besu-22.7.1/. /usr/local/bin/besu
 ```
 Start the client:
 ```console
@@ -904,15 +908,14 @@ sudo systemctl start besu
 ```
 Clean up:
 ```console
-rm besu-22.7.0.tar.gz
-rm -rf ./besu-22.7.0
+rm besu-22.7.1.tar.gz
+rm -rf ./besu-22.7.1
 ```
 ### System Updates
 **Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
 ```console
 sudo apt update -y && sudo apt upgrade -y
-sudo apt autoremove
-sudo apt autoclean
+sudo apt autoremove && sudo apt autoclean
 ```
 A reboot may be necessary: `sudo reboot`
 
