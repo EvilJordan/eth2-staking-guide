@@ -881,7 +881,32 @@ sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
 sudo systemctl start teku
 ```
 ### Besu Updates
-### Placeholder for now
+Download the latest release from https://github.com/hyperledger/besu/releases:
+```console
+cd ~
+wget https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/22.7.1/besu-22.7.1.tar.gz
+```
+Unzip:
+```console
+tar xvf besu-22.7.0.tar.gz
+```
+Stop the existing client:
+```console
+sudo systemctl stop besu
+```
+Copy the new release to the appropriate location:
+```console
+sudo cp -a ./besu-22.7.0 /usr/local/bin/besu
+```
+Start the client:
+```console
+sudo systemctl start besu
+```
+Clean up:
+```console
+rm besu-22.7.0.tar.gz
+rm -rf ./besu-22.7.0
+```
 ### System Updates
 **Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
 ```console
