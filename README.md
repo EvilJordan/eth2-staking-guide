@@ -888,7 +888,7 @@ wget https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/22.7.1/besu-22.
 ```
 Unzip:
 ```console
-tar xvf besu-22.7.0.tar.gz
+tar xvf besu-22.7.1.tar.gz
 ```
 Stop the existing client:
 ```console
