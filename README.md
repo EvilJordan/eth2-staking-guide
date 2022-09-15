@@ -657,9 +657,31 @@ Create a user for besu:
 ```console
 sudo useradd --no-create-home --shell /bin/false besu
 sudo mkdir -p /var/lib/besu
+sudo mkdir -p /etc/besu
 sudo chown -R besu:besu /var/lib/besu
+sudo chown -R besu:besu /etc/teku
 ```
-Create the Besu configuration:
+Create the Besu service configuration:
+```console
+sudo nano /etc/besu/besu.toml
+```
+Add the following to `besu.toml`:
+```properties
+network="mainnet"
+sync-mode="X_CHECKPOINT"
+rpc-ws-enabled=true
+rpc-http-enabled=true
+rpc-http-port="8545"
+rpc-http-host="0.0.0.0"
+rpc-http-api=["TXPOOL"]
+engine-rpc-port="8551"
+engine-host-allowlist=["localhost","127.0.0.1"]
+data-path="/var/lib/besu"
+data-storage-format="BONSAI"
+metrics-enabled=true
+engine-jwt-secret="/var/lib/ethereum/jwttoken"
+```
+Create the Besu service:
 ```
 sudo nano /etc/systemd/system/besu.service
 ```
@@ -677,16 +699,7 @@ Type=simple
 Restart=always
 RestartSec=5
 ExecStart=/usr/local/bin/besu/bin/besu \
-    --network=goerli \
-    --sync-mode=X_CHECKPOINT \
-    --rpc-ws-enabled=true \
-    --rpc-http-enabled=true \
-    --engine-rpc-port=8551 \
-    --engine-host-allowlist=localhost,127.0.0.1 \
-    --data-path=/var/lib/besu \
-    --data-storage-format=BONSAI \
-    --metrics-enabled=true \
-    --engine-jwt-secret=/var/lib/ethereum/jwttoken
+    --config-file=/etc/besu/besu.toml
 
 [Install]
 WantedBy=default.target
@@ -755,8 +768,6 @@ Add the following to `teku.yaml`:
 # EXAMPLE FILE - DO NOT CUT AND PASTE WITHOUT CHANGES
 data-base-path: "/var/lib/teku"
 network: "prater"
-# if a backup ETH1 node is desired, replace the endpoint with your information from Infura
-eth1-endpoint: ["http://127.0.0.1:8545/", "https://goerli.infura.io/v3/XXX"]
 # if quick-sync is desired, replace the state URL with your information from Infura
 initial-state: "https://XXX:XXX@eth2-beacon-prater.infura.io/eth/v1/debug/beacon/states/finalized"
 validator-keys: "/var/lib/teku/validator_keys:/var/lib/teku/validator_keys"
