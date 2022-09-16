@@ -930,6 +930,15 @@ sudo apt autoremove && sudo apt autoclean
 ```
 A reboot may be necessary: `sudo reboot`
 
+### MEV-Boost Updates
+```console
+CGO_CFLAGS="-O -D__BLST_PORTABLE__" go install github.com/flashbots/mev-boost@latest
+sudo systemctl stop mevboost
+sudo cp ~/go/bin/mev-boost /usr/local/bin
+sudo chown mevboost:mevboost /usr/local/bin/mev-boost
+sudo systemctl start mevboost
+```
+
 [^turboboost]: TurboBoost seems unnecessary and will make your NUC run hot and loud.
 
 [^status]: Install [ethdo](https://github.com/wealdtech/ethdo) and then use the [status script](https://github.com/EvilJordan/eth2-staking-guide/blob/main/status.sh) to make sure timing is ok for a restart or update.
