@@ -346,22 +346,6 @@ scrape_configs:
     scheme: http
     static_configs:
     - targets: ["localhost:8008"]
-  - job_name: "json_exporter"
-    static_configs:
-    - targets:
-      - 127.0.0.1:7979
-  - job_name: "json"
-    metrics_path: /probe
-    static_configs:
-    - targets:
-      - https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
-    relabel_configs:
-    - source_labels: [__address__]
-      target_label: __param_target
-    - source_labels: [__param_target]
-      target_label: instance
-    - target_label: __address__
-      replacement: 127.0.0.1:7979
 ```
 Change permissions on the `prometheus.yml` file:
 ```console
@@ -448,88 +432,7 @@ Enable the service:
 sudo systemctl enable node_exporter
 ```
 
-### Install json_exporter
-#### Install go:
-Visit https://go.dev/dl/ to grab the latest version of go. As of this writing, that version is 1.17.6:
-```console
-cd ~
-curl -OL https://go.dev/dl/go1.17.6.linux-amd64.tar.gz
-```
-Extract and install go:
-```console
-sudo tar -C /usr/local -xvf go1.17.6.linux-amd64.tar.gz
-sudo ln -s /usr/local/go/bin/go /usr/bin/go
-```
-#### Create User Account
-```console
-sudo adduser --system json_exporter --group --no-create-home
-```
-#### Install json_exporter
-```console
-cd ~
-git clone https://github.com/prometheus-community/json_exporter.git
-cd json_exporter
-make build
-sudo cp json_exporter /usr/local/bin/
-cd ~
-rm -rf json_exporter
-sudo chown json_exporter:json_exporter /usr/local/bin/json_exporter
-```
-#### Configure json_exporter
-Create a directory for the json_exporter configuration file, and make it owned by the json_exporter account:
-
-```console
-sudo mkdir /etc/json_exporter
-sudo chown json_exporter:json_exporter /etc/json_exporter
-```
-Edit the `json_exporter.yml` configuration file:
-```console
-sudo nano /etc/json_exporter/json_exporter.yml
-```
-Add the following text into the `json_exporter.yml` file. 
-```yaml
-metrics:
-- name: ethusd
-  path: "{.ethereum.usd}"
-  help: Ethereum (ETH) price in USD
-```
-Change ownership of the configuration file to the json_exporter account.
-```console
-sudo chown json_exporter:json_exporter /etc/json_exporter/json_exporter.yml
-```
-
-#### Set Up System Service
-Set up systemd to automatically start json_exporter. It will also restart the software if it stops.
-```console
-sudo nano /etc/systemd/system/json_exporter.service
-```
-Add the following text into the `json_exporter.service` file:
-```properties
-[Unit]
-Description=JSON Exporter
-[Service]
-Type=simple
-Restart=always
-RestartSec=5
-User=json_exporter
-ExecStart=/usr/local/bin/json_exporter --config.file /etc/json_exporter/json_exporter.yml
-[Install]
-WantedBy=multi-user.target
-```
-Reload the systemd service file configurations, start node_exporter, then enable the json_exporter service to have it start automatically on reboot.
-
-```console
-sudo systemctl daemon-reload
-sudo systemctl start json_exporter
-```
-Check the status. There should be a green `active` in the output:
-```console
-sudo systemctl status json_exporter
-```
-Enable the service:
-```console
-sudo systemctl enable json_exporter
-```
+### custom metrics to-do
 
 ### Install Grafana:
 ```console
