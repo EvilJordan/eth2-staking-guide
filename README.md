@@ -760,15 +760,9 @@ Just in case, update the installed geth package to make sure it sees the latest 
 ```console
 sudo apt update
 ```
-Now, update geth!
+Now, update and restart geth!
 ```console
-sudo apt upgrade -y
-sudo apt autoremove
-sudo apt autoclean
-```
-Restart geth:
-```console
-sudo systemctl restart geth
+sudo apt upgrade -y && sudo apt autoremove && sudo apt autoclean && sudo systemctl restart geth
 ```
 Make sure geth is ok (should see a green "active" message):
 ```console
@@ -793,9 +787,7 @@ Restart beacon chain and validator as per normal operating procedures.
 **Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
 ```console
 cd ~
-sudo systemctl stop teku
-sudo cp -a teku/build/install/teku/. /usr/local/bin/teku
-sudo systemctl start teku
+sudo systemctl stop teku && sudo cp -a teku/build/install/teku/. /usr/local/bin/teku && sudo systemctl start teku
 ```
 ### Besu Updates
 Download the latest release from https://github.com/hyperledger/besu/releases  
@@ -808,17 +800,9 @@ Unzip:
 ```console
 tar xvf besu-22.7.1.tar.gz
 ```
-Stop the existing client:
+Stop the existing client, copy the new release to the appropriate location, start the client:
 ```console
-sudo systemctl stop besu
-```
-Copy the new release to the appropriate location:
-```console
-sudo cp -a besu-22.7.1/. /usr/local/bin/besu
-```
-Start the client:
-```console
-sudo systemctl start besu
+sudo systemctl stop besu && sudo cp -a besu-22.7.1/. /usr/local/bin/besu && sudo systemctl start besu
 ```
 Clean up:
 ```console
@@ -836,10 +820,7 @@ A reboot may be necessary: `sudo reboot`
 ### MEV-Boost Updates
 ```console
 CGO_CFLAGS="-O -D__BLST_PORTABLE__" go install github.com/flashbots/mev-boost@latest
-sudo systemctl stop mevboost
-sudo cp ~/go/bin/mev-boost /usr/local/bin
-sudo chown mevboost:mevboost /usr/local/bin/mev-boost
-sudo systemctl start mevboost
+sudo systemctl stop mevboost && sudo cp ~/go/bin/mev-boost /usr/local/bin && sudo chown mevboost:mevboost /usr/local/bin/mev-boost && sudo systemctl start mevboost
 ```
 
 [^turboboost]: TurboBoost seems unnecessary and will make your NUC run hot and loud.
