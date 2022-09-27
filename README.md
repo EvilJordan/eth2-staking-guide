@@ -197,6 +197,12 @@ Reboot the machine:
 sudo reboot
 ```
 
+### Install ccze
+This helps provide more legible log output
+```console
+sudo apt install ccze
+```
+
 ### Install Fail2Ban
 ```console
 sudo apt-get install fail2ban -y
@@ -278,7 +284,7 @@ Log back in to server via SSH to see 2FA in action.
 ### Install Java
 Since we are running Teku (and possibly Besu) we need to install Java:
 ```console
-sudo apt install default-jre default-jdk
+sudo apt install openjdk-17-jdk
 ```
 
 ## Install Prometheus/Grafana
@@ -538,7 +544,7 @@ sudo systemctl enable geth
 Wait for Geth to sync and monitor with:
 
 ```console
-sudo journalctl -fu geth -o cat
+sudo journalctl -fu geth -o cat | ccze -A
 ```
 Monitoring of the sync process **which must be complete before proceeding** can also be performed with the following commmands and looking for a return value of `false`. Anything else means syncing is still in progress
 ```console
@@ -622,7 +628,7 @@ sudo systemctl enable besu
 ```
 Monitor Beacon Chain syncing progress, peers, and other information:
 ```console
-sudo journalctl -fu besu -o cat
+sudo journalctl -fu besu -o cat | ccze -A
 ```
 
 ### Install Teku
@@ -732,7 +738,7 @@ sudo systemctl enable teku
 ```
 Monitor Beacon Chain syncing progress, peers, and other information:
 ```console
-sudo journalctl -fu teku -o cat
+sudo journalctl -fu teku -o cat | ccze -A
 ```
 **Teku needs to sync to the Beacon Chain before proceeding with the funding of validators.**
 
