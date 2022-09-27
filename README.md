@@ -52,8 +52,7 @@ rm -rf lolcat
 Running this command for the first time after a new install is always smart. It will be necessary to update your machine regularly (and manually, repeating these steps) to keep abreast of security and critical package updates.
 ```console
 sudo apt-get update -y && sudo apt dist-upgrade -y
-sudo apt-get autoremove
-sudo apt-get autoclean
+sudo apt-get autoremove && sudo apt-get autoclean
 ```
 
 ### Disable root account
