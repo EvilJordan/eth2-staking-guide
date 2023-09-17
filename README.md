@@ -333,7 +333,7 @@ scrape_configs:
     static_configs:
     - targets: ["localhost:9100"]
   - job_name: "geth"
-    scrape_timeout: 10s
+    scrape_timeout: 3s
     metrics_path: /debug/metrics/prometheus
     scheme: http
     static_configs:
@@ -343,10 +343,9 @@ scrape_configs:
     metrics_path: /metrics
     scheme: http
     static_configs:
-    - targets:
-      - localhost:9545
+    - targets: ["localhost:9545"]
   - job_name: "teku"
-    scrape_timeout: 10s
+    scrape_timeout: 3s
     metrics_path: /metrics
     scheme: http
     static_configs:
