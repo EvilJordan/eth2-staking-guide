@@ -567,7 +567,7 @@ sudo useradd --no-create-home --shell /bin/false besu
 sudo mkdir -p /var/lib/besu
 sudo mkdir -p /etc/besu
 sudo chown -R besu:besu /var/lib/besu
-sudo chown -R besu:besu /etc/teku
+sudo chown -R besu:besu /etc/besu
 ```
 Create the Besu service configuration:
 ```console
