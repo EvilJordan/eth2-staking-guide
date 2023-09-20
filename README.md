@@ -173,7 +173,7 @@ sudo nano /etc/ssh/sshd_config
 Edit `sshd_config`:
 
 ```properties
-ChallengeResponseAuthentication no
+KbdInteractiveAuthentication no
 PasswordAuthentication no
 PermitRootLogin prohibit-password
 PermitEmptyPasswords no
@@ -248,7 +248,7 @@ sudo nano /etc/ssh/sshd_config
 ```
 Find and set the following within the `sshd_config` file:
 ```properties
-ChallengeResponseAuthentication yes
+KbdInteractiveAuthentication yes
 UsePAM yes
 ```
 Add the following to the `sshd_config` file:
