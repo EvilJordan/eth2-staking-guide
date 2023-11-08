@@ -280,6 +280,39 @@ exit
 ```
 Log back in to server via SSH to see 2FA in action.
 
+### Install chrony
+Synchronized time management is important. Chrony handles that better than the in-built system service.
+```console
+sudo apt install chrony
+```
+
+Now, we need to edit the chrony service file to use a better time server.
+```console
+sudo nano /etc/chrony/chrony.conf
+```
+
+```properties
+# replacing original ubuntu servers by Google servers
+# pool ntp.ubuntu.com        iburst maxsources 4
+# pool 0.ubuntu.pool.ntp.org iburst maxsources 1
+# pool 1.ubuntu.pool.ntp.org iburst maxsources 1
+# pool 2.ubuntu.pool.ntp.org iburst maxsources 2
+server time1.google.com iburst minpoll 4 maxpoll 6 polltarget 16
+server time2.google.com iburst minpoll 4 maxpoll 6 polltarget 16
+server time3.google.com iburst minpoll 4 maxpoll 6 polltarget 16
+server time4.google.com iburst minpoll 4 maxpoll 6 polltarget 16
+
+# rest of the doc ...
+
+# leapsectz right/UTC
+```
+
+Finally, restart the chrony service:
+```console
+sudo systemctl restart chrony.service
+```
+
+
 ### Install Java
 Since we are running Teku (and possibly Besu) we need to install Java:
 ```console
