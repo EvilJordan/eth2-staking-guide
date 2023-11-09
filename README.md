@@ -151,7 +151,7 @@ sudo lvdisplay #
 - To search, press `^W` ("Where Is"), then type in your search and hit Enter.
 - To exit nano, `^X`. If changes have been made, but not yet saved, nano will prompt to confirm changes, or if you want to discard or cancel the exit operation altogether.
 
-### Install apcupsd (optional for UPS backups - requires USB cable)
+### Install [apcupsd](http://www.apcupsd.org/) (optional for UPS backups - requires USB cable)
 If you do not have a UPS skip this step.  
 If your UPS does not have a USB connection to allow it to be plugged into the staking machine, skip this step.
 ```console
