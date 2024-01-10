@@ -828,7 +828,7 @@ sudo systemctl stop teku && sudo cp -a teku/build/install/teku/. /usr/local/bin/
 ```
 ### Besu Updates
 Download the latest release from https://github.com/hyperledger/besu/releases  
-Change any URL or filename below with the appropriate release number
+Change any URL or filename below with the appropriate release number/file
 ```console
 cd ~
 wget https://hyperledger.jfrog.io/artifactory/besu-binaries/besu/22.7.1/besu-22.7.1.tar.gz
@@ -845,6 +845,17 @@ Clean up:
 ```console
 rm besu-22.7.1.tar.gz
 rm -rf ./besu-22.7.1
+```
+### Nethermind Updates
+Download the latest release from https://github.com/NethermindEth/nethermind/releases
+Change any URL or filename below with the appropriate release number/file
+```console
+sudo su -l nethermind
+wget https://github.com/NethermindEth/nethermind/releases/download/1.25.0/nethermind-1.25.0-db6ecc76-linux-x64.zip
+unzip nethermind-1.25.0-db6ecc76-linux-x64.zip -d ./build/
+rm nethermind-1.25.0-db6ecc76-linux-x64.zip
+exit
+sudo systemctl restart nethermind
 ```
 ### System Updates
 **Make sure the validators are in an acceptable state to be stopped before proceeding**[^status]
