@@ -29,7 +29,7 @@ This guide has references to "Prater," an Ethereum Testnet. Mainnet setup is nea
 - [Validator keys and deposit files](https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater#2.-signup-to-be-a-validator-at-the-launchpad) - Steps 1 and 2 OR you can skip all the hard stuff and use the [Wagyu](https://wagyu.gg/) GUI. No matter what process you pick, please generate these validator keys on a secure machine.
 
 ## Set up Router
-- Assign a static IP to your staking machine.
+- Assign a static IP to your staking machine on either your local network or your WAN if possible.
 - Open ports on router for SSH access (default port 22) (optional if not managing locally), p2p (9000), and eth1 (30303)
 
 ## Set up Staking Machine
