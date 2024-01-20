@@ -514,7 +514,7 @@ sudo systemctl restart grafana-server
 16. Repeat steps 12-15 for the execution client dashboard.
 17. Repeat steps 12-15 for the node-exporter dashboard.
 
-## Install the Consensus (Teku) and Execution (Geth or Besu) Layers
+## Install the Consensus (Teku) and Execution (Geth/Besu/Nethermind) Layers
 ### Generate a JWT
 ```console
 sudo mkdir -p /var/lib/ethereum
@@ -522,7 +522,7 @@ openssl rand -hex 32 | tr -d "\n" | sudo tee /var/lib/ethereum/jwttoken
 sudo chmod +r /var/lib/ethereum/jwttoken
 ```
 > **Warning**
-> Only install Geth _or_ Besu. Not both.
+> Only install Geth _or_ Besu _or_ Nethermind. Not each.
 
 ### Install Geth
 ```console
@@ -661,6 +661,9 @@ Monitor Beacon Chain syncing progress, peers, and other information:
 ```console
 sudo journalctl -fu besu -o cat | ccze -A
 ```
+
+### Install Besu
+Coming Soon
 
 ### Install Teku
 ```console
@@ -847,7 +850,7 @@ rm besu-22.7.1.tar.gz
 rm -rf ./besu-22.7.1
 ```
 ### Nethermind Updates
-Download the latest release from https://github.com/NethermindEth/nethermind/releases
+Download the latest release from https://github.com/NethermindEth/nethermind/releases  
 Change any URL or filename below with the appropriate release number/file
 ```console
 sudo su -l nethermind
