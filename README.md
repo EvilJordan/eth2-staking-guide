@@ -662,7 +662,7 @@ Monitor Beacon Chain syncing progress, peers, and other information:
 sudo journalctl -fu besu -o cat | ccze -A
 ```
 
-### Install Besu
+### Install Nethermind
 Coming Soon
 
 ### Install Teku
