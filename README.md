@@ -1,4 +1,4 @@
-# ETH2 Self-Staking Guide - TEKU/GETH/BESU/MEVBOOST
+# ETH2 Self-Staking Guide - TEKU/GETH/BESU/NETHERMIND/MEVBOOST
 
 This guide is built with a combination of information from:
 - https://www.coincashew.com/coins/overview-eth/guide-or-how-to-setup-a-validator-on-eth2-testnet-prater
