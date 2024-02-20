@@ -16,22 +16,24 @@ read -r -a committeeMembersArray <<< "$committeeMembers"
 upcomingCommitteeMembers=$($ETHDO synccommittee members --period=next)
 read -r -a upcomingCommitteeMembersArray <<< "$upcomingCommitteeMembers"
 
-propserDutiesArray=($($ETHDO proposer duties --epoch $epoch)) # capture validator indexes that are proposing and split into an array - unfortunately adds a newline to the end of the validator index
-upcomingPropserDutiesArray=($($ETHDO proposer duties --epoch $(( epoch + 1 )) )) # capture validator indexes that are proposing in the next epoch and split into an array - unfortunately adds a newline to the end of the validator index
+propserDutiesArray=($($ETHDO proposer duties --epoch $epoch)) # capture validator indexes that are proposing and split into an array
+upcomingPropserDutiesArray=($($ETHDO proposer duties --epoch $(( epoch + 1 )) )) # capture validator indexes that are proposing in the next epoch and split into an array
 
-# TODO: remove newline from proposer arrays to allow for exact match, instead of substring, below
+shopt -s extglob # turn on extended glob
+propserDutiesArray=( "${propserDutiesArray[@]/%+([[:space:]])/}" ) # remove trailing newline from each element
+upcomingPropserDutiesArray=( "${upcomingPropserDutiesArray[@]/%+([[:space:]])/}" ) # remove trailing newline from each element
 
 for validator in "${validators[@]}"
 do
 	for proposer in "${propserDutiesArray[@]}"
 	do
-		if [[ $proposer == *$validator* ]]; then # this is imperfect in that if a proposer index contains your index, it will be a false positive
+		if [[ $proposer == $validator ]]; then
 			echo "$validator" 'is going to propose a block this epoch!' | lolcat
 		fi
 	done
 	for proposer in "${upcomingPropserDutiesArray[@]}"
 	do
-		if [[ $proposer == *$validator* ]]; then # this is imperfect in that if a proposer index contains your index, it will be a false positive
+		if [[ $proposer == $validator ]]; then
 			echo "$validator" 'is going to propose a block NEXT epoch!' | lolcat
 		fi
 	done
